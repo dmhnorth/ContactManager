@@ -2,27 +2,38 @@ package ContactManager;
 
 public class ContactImpl implements Contact {
 
+	private int id;
+	private String name;
+	private String notes = "No notes yet.";
+	
+	
+	public ContactImpl(String name){
+		this.name = name;
+		this.id = name.hashCode();
+	}
+	
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getName() {		
+		return name;
 	}
 
 	@Override
-	public String getNotes() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNotes() {		
+		return notes;
 	}
 
 	@Override
 	public void addNotes(String note) {
-		// TODO Auto-generated method stub
+		if (notes.equals("No notes yet.")) {
+			notes = note;
+		} else {
+			notes += "; " + note;
+		}
 		
 	}
 
