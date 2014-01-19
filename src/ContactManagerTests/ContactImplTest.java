@@ -20,21 +20,6 @@ public class ContactImplTest {
 	ContactImpl contactA = new ContactImpl("David North");
 	
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
 	 * Test method for {@link ContactManager.ContactImpl#getId()}.
 	 */
 	@Test
