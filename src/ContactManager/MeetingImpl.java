@@ -11,7 +11,15 @@ import java.util.Set;
  *
  */
 public class MeetingImpl implements Meeting {
-
+	
+	private Calendar dateOfMeeting;
+	
+	
+	public MeetingImpl(int year, int month, int date, int hourOfDay, int minute){
+		//uses the parameters from user of the set function within Calendar on javaDoc
+	}
+	
+	
 	@Override
 	public int getId() {
 		// TODO Auto-generated method stub

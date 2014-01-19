@@ -9,12 +9,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ContactManager.MeetingImpl;
+
 /**
  * @author Dave
  *
  */
 public class MeetingImplTest {
-
+	
+	MeetingImpl meetingA = new MeetingImpl();
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -34,7 +38,8 @@ public class MeetingImplTest {
 	 */
 	@Test
 	public void testGetId() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("ID incorrect", meetingA.getId(), meetingA.getDate().hashCode());
+		fail("Not yet implemented"); // ASSUMING HASH IS GENERATED ON DATE VARIABLE
 	}
 
 	/**

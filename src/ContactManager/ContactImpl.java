@@ -9,7 +9,7 @@ public class ContactImpl implements Contact {
 	
 	public ContactImpl(String name){
 		this.name = name;
-		this.id = name.hashCode();
+		this.id = Math.abs(name.hashCode()%10000);
 	}
 	
 	@Override

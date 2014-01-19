@@ -39,7 +39,8 @@ public class ContactImplTest {
 	 */
 	@Test
 	public void testGetId() {
-		assertEquals("ID incorrect", contactA.getId(), contactA.getName().hashCode());
+		assertEquals("ID incorrect", contactA.getId(), Math.abs(contactA.getName().hashCode()%10000));
+		System.out.println(contactA.getId());
 	}
 
 	/**
