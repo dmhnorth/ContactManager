@@ -12,6 +12,13 @@ import java.util.Set;
  */
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting{
 
+	
+	public FutureMeetingImpl(Set<Contact> contacts, int year, int month, int date, int hourOfDay, int minute) {
+		super(contacts, year, month, date, hourOfDay, minute);
+	}
+	
+	/*
+	 * mostly unneeded
 	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
@@ -20,8 +27,8 @@ public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting{
 
 	@Override
 	public Calendar getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		super();
+		return this.dateOfMeeting;
 	}
 
 	@Override
@@ -29,5 +36,5 @@ public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	*/
 }

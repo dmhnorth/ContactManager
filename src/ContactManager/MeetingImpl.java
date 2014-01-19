@@ -16,7 +16,7 @@ public class MeetingImpl implements Meeting {
 	private int id;
 	
 	
-	public MeetingImpl(int year, int month, int date, int hourOfDay, int minute){
+	public MeetingImpl(Set<Contact>, int year, int month, int date, int hourOfDay, int minute) {
 		//uses the parameters from user of the set function within Calendar on javaDoc
 	}
 	
