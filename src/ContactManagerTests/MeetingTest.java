@@ -11,10 +11,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import ContactManager.Contact;
 import ContactManager.ContactImpl;
+import ContactManager.EmptyContactException;
 import ContactManager.MeetingImpl;
 import ContactManager.Meeting;
 
@@ -29,17 +32,22 @@ public class MeetingTest {
 	private Contact contactB;
 	private Set<Contact> testContactList;
 	Meeting meeting;
+	
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws EmptyContactException {
 		contactA = new ContactImpl("David North");
 		contactB = new ContactImpl("Ian James", "CEO of WCRS");
 		testContactList = new HashSet<Contact>();
 		testContactList.add(contactA);
 		testContactList.add(contactB);
-		meeting = new MeetingImpl(testContactList, birthday2014);
+		meeting = new MeetingImpl(testContactList, birthday2014, 0);
 	}
 
 	/**
@@ -64,6 +72,24 @@ public class MeetingTest {
 	@Test
 	public void testGetContacts() {
 		assertEquals("Contacts not found", testContactList, meeting.getContacts());
+	}
+	
+	/**
+	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
+	 */
+	@Test
+	public void testGetNullContacts() throws EmptyContactException {
+		thrown.expect(EmptyContactException.class);
+		new MeetingImpl(null, birthday2014, 0);
+	}
+	
+	/**
+	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
+	 */
+	@Test
+	public void testGetNoContacts() throws EmptyContactException {
+		thrown.expect(EmptyContactException.class);
+		new MeetingImpl(new HashSet<Contact>(), birthday2014, 0);
 	}
 	
 

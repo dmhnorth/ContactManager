@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class MeetingImpl implements Meeting {
 	
-	private static int counter = 0;
+	
 	
 	private int id;
 	private Calendar date;
@@ -22,11 +22,16 @@ public class MeetingImpl implements Meeting {
 	/*
 	 * meeting constructor used to create all meetings from scratch, Past and Future
 	 */
-	public MeetingImpl(Set<Contact> contacts, Calendar date) {
+	public MeetingImpl(Set<Contact> contacts, Calendar date, int iD) throws EmptyContactException {
+		
+		//
+		if(contacts == null || contacts.isEmpty()) {
+			throw new EmptyContactException();
+		}
+		
 		this.date = date;
 		this.contacts = contacts;
-		this.id = MeetingImpl.counter;
-		MeetingImpl.counter++;
+		this.id = iD;
 	}
 	
 	
