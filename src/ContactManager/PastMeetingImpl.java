@@ -14,9 +14,11 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
 	private String notes = "";
 	
-	public PastMeetingImpl(Set<Contact> contacts, Calendar date, String notes) {
-		super(contacts, date);
-		this.notes = notes;
+	public PastMeetingImpl(Set<Contact> contacts, Calendar date, int id, String notes) throws EmptyContactException {		
+		super(contacts, date, id);
+		if (notes != null) {
+			this.notes = notes;
+		}
 	}
 	
 	
