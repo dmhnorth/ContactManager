@@ -15,7 +15,7 @@ import ContactManager.ContactImpl;
  * @author Dave
  *
  */
-public class ContactImplTest {
+public class ContactTest {
 
 	ContactImpl contactA = new ContactImpl("David North");
 	

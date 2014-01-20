@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Dave
  *
  */
-public class ContactManagerImplTest {
+public class ContactManagerTest {
 
 	/**
 	 * @throws java.lang.Exception
