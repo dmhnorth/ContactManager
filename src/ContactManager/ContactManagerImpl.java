@@ -29,23 +29,35 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public PastMeeting getPastMeeting(int id) {
-		for (Meeting m : meetingList)
-		    if (m.getId() == id)
-		return (PastMeeting) m;
+		try {
+			for (Meeting m : meetingList)
+				if (m.getId() == id)
+			return (PastMeeting) m;
+		} catch (Exception e) {
+			return null;
 		}
+	}
 
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
-		for (Meeting m : meetingList)
-		    if (m.getId() == id)
-		return (FutureMeeting) m;
-		return null;
+		try {
+			for (Meeting m : meetingList)
+			    if (m.getId() == id)
+			return (FutureMeeting) m;		
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Meeting getMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			for (Meeting m : meetingList)
+			    if (m.getId() == id)
+			return (MeetingImpl) m;
+		} catch (Exception e) {
+			return null;					
+		}
 	}
 
 	@Override
