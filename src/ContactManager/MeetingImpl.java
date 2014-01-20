@@ -17,18 +17,18 @@ public class MeetingImpl implements Meeting {
 	
 	private int id;
 	private String notes;//Unsure if required here or in subclasses at the moment
-	private Calendar dateOfMeeting = Calendar.getInstance();
-	Set<Contact> meetingContacts = new HashSet<Contact>();
+	private Calendar dateOfMeeting;
+	Set<Contact> meetingContacts;
 	
 	
 	/*
 	 * meeting constructor used to create all meetings from scratch, Past and Future
 	 */
-	public MeetingImpl(Set<Contact> contacts, int year, int month, int date, int hourOfDay, int minute) {
-		this.dateOfMeeting.set(year, month, date, hourOfDay, minute);
+	public MeetingImpl(Set<Contact> contacts, Calendar date) {
+		this.dateOfMeeting = date;
 		this.meetingContacts = contacts;
-		meetingCounter++;
-		this.id = Math.abs(meetingCounter + dateOfMeeting.hashCode()%10000);
+		this.id = MeetingImpl.meetingCounter;
+		MeetingImpl.meetingCounter++;
 	}
 	
 	
