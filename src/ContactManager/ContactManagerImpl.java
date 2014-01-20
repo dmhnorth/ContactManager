@@ -5,9 +5,11 @@ package ContactManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -17,7 +19,12 @@ import java.util.Set;
  */
 public class ContactManagerImpl implements ContactManager {
 	
+	Map<String, Contact> contactMap;
 	
+	
+	public ContactManagerImpl() {
+		contactMap = new HashMap<String, Contact>();
+	}
 	
 	
 	@Override
@@ -81,8 +88,15 @@ public class ContactManagerImpl implements ContactManager {
 	
 
 	@Override
-	public void addNewContact(String name, String notes) {
+	public void addNewContact(String name, String notes) throws NullPointerException {
 		
+		if (name == null) { 
+			throw new NullPointerException();
+		}
+		
+		Contact contact = new ContactImpl(name, 0);
+		contact.addNotes(notes);
+		contactMap.put(name, contact);		
 	}
 
 	@Override
@@ -93,8 +107,10 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Set<Contact> getContacts(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Contact namedContact = contactMap.get(name);
+		Set<Contact> contactSet = new HashSet<Contact>();
+		contactSet.add(namedContact);
+		return contactSet;
 	}
 
 	@Override

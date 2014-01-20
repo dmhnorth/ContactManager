@@ -9,11 +9,14 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import ContactManager.Contact;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
+import ContactManager.EmptyContactException;
 
 /**
  * @author Dave
@@ -21,19 +24,24 @@ import ContactManager.ContactManagerImpl;
  */
 public class ContactManagerTest {
 
+	String name = "David North";
+	String notes = "Some notes";
+	ContactManager cm;
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		cm = new ContactManagerImpl();
 	}
 
 	@Test
 	public void addNewContact() {
-		ContactManager cm = new ContactManagerImpl();
-		String name = "David North";
-		String notes = "Some notes";
+		
 		cm.addNewContact(name, notes);
 		Set<Contact> contactSet = cm.getContacts(name);
 		
@@ -41,7 +49,14 @@ public class ContactManagerTest {
 		Contact contact = contacts[0];
 		
 		assertEquals(contact.getName(), name);
-		assertEquals(contact.getNotes(), notes);
-		
+		assertEquals(contact.getNotes(), notes);		
+	}
+	
+	
+	
+	@Test
+	public void addNewContactwithNullName() throws NullPointerException {
+		thrown.expect(NullPointerException.class);
+		cm.addNewContact(null, notes);
 	}
 }
