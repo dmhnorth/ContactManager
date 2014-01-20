@@ -4,6 +4,7 @@
 package ContactManager;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,12 +13,15 @@ import java.util.Set;
  */
 public class MeetingImpl implements Meeting {
 	
-	private Calendar dateOfMeeting;
 	private int id;
+	private String notes;
+	private Calendar dateOfMeeting;
+	Set<Contact> meetingContacts = new HashSet<Contact>();
 	
 	
-	public MeetingImpl(Set<Contact>, int year, int month, int date, int hourOfDay, int minute) {
-		//uses the parameters from user of the set function within Calendar on javaDoc
+	public MeetingImpl(Set<Contact> contacts, int year, int month, int date, int hourOfDay, int minute) {
+		this.dateOfMeeting.set(year, month, date, hourOfDay, minute);
+		this.meetingContacts = contacts;
 	}
 	
 	

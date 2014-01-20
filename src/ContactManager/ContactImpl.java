@@ -12,6 +12,12 @@ public class ContactImpl implements Contact {
 		this.id = Math.abs(name.hashCode()%10000);
 	}
 	
+	public ContactImpl(String name, String note){
+		this.name = name;
+		this.id = Math.abs(name.hashCode()%10000);
+		this.notes = note;
+	}
+	
 	@Override
 	public int getId() {
 		return id;

@@ -56,15 +56,20 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
-			String text) {
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void addMeetingNotes(int id, String text) {
-		// TODO Auto-generated method stub
+		if (MeetingImpl.notes.equals("No notes yet.")) {
+			MeetingImpl.notes = note;
+		} else {
+			MeetingImpl.notes += "; " + note;
+		}
+		
+	}
 		
 	}
 
