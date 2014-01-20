@@ -4,23 +4,14 @@ public class ContactImpl implements Contact {
 
 	private int id;
 	private String name;
-	private String notes = "No notes yet.";
+	private String notes = "";
 	
 	/*
 	 * basic constructor
 	 */
-	public ContactImpl(String name){
+	public ContactImpl(String name, int iD){
 		this.name = name;
-		this.id = Math.abs(name.hashCode()%10000);
-	}
-	
-	/*
-	 * Contact constructor if you would like to add notes immediately.
-	 */
-	public ContactImpl(String name, String note){
-		this.name = name;
-		this.id = Math.abs(name.hashCode()%10000);
-		this.notes = note;
+		this.id = iD;
 	}
 	
 	/*
@@ -52,12 +43,9 @@ public class ContactImpl implements Contact {
 	 */
 	@Override
 	public void addNotes(String note) {
-		if (notes.equals("No notes yet.")) {
-			notes = note;
-		} else {
-			notes += "; " + note;
-		}
-		
+		notes += note;
 	}
+		
+	
 
 }

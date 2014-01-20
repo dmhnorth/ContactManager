@@ -17,15 +17,21 @@ import ContactManager.ContactImpl;
  */
 public class ContactTest {
 
-	ContactImpl contactA = new ContactImpl("David North");
+	ContactImpl contactA;
+	
+	
+	@Before
+	public void setUp(){
+		contactA = new ContactImpl("David North", 0);
+	}
+	
 	
 	/**
 	 * Test method for {@link ContactManager.ContactImpl#getId()}.
 	 */
 	@Test
 	public void testGetId() {
-		assertEquals("ID incorrect", contactA.getId(), Math.abs(contactA.getName().hashCode()%10000));
-		System.out.println(contactA.getId());
+		assertEquals(contactA.getId(), 0);
 	}
 
 	/**
@@ -40,8 +46,8 @@ public class ContactTest {
 	 * Test method for {@link ContactManager.ContactImpl#getNotes()}.
 	 */
 	@Test
-	public void testGetNotes() {
-		assertEquals("Notes not found", contactA.getNotes(), "No notes yet.");
+	public void testGetEmptyNotes() {
+		assertEquals(contactA.getNotes(), "");
 	}
 
 	/**
@@ -50,9 +56,9 @@ public class ContactTest {
 	@Test
 	public void testAddNotes() {
 		contactA.addNotes("New note");
-		assertEquals("Notes not added", contactA.getNotes(), "New note");
-		contactA.addNotes("Another");
-		assertEquals("Notes not added", contactA.getNotes(), "New note; Another");
+		assertEquals(contactA.getNotes(), "New note");
+		contactA.addNotes("; Another");
+		assertEquals(contactA.getNotes(), "New note; Another");
 	}
 
 }

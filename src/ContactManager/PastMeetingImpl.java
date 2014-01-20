@@ -12,7 +12,6 @@ import java.util.Set;
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
-	private Calendar dateOfMeeting;
 	private String notes = "";
 	
 	public PastMeetingImpl(Set<Contact> contacts, Calendar date, String notes) {

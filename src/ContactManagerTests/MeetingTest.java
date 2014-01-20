@@ -42,8 +42,8 @@ public class MeetingTest {
 	 */
 	@Before
 	public void setUp() throws EmptyContactException {
-		contactA = new ContactImpl("David North");
-		contactB = new ContactImpl("Ian James", "CEO of WCRS");
+		contactA = new ContactImpl("David North", 0);
+		contactB = new ContactImpl("Ian James", 0);
 		testContactList = new HashSet<Contact>();
 		testContactList.add(contactA);
 		testContactList.add(contactB);
