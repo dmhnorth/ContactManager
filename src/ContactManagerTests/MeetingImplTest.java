@@ -35,7 +35,7 @@ public class MeetingImplTest {
 	MeetingImpl meetingA = new MeetingImpl(testContactList, 2014, 9, 3, 12, 0);//need to add further constructor params
 	MeetingImpl meetingB = new MeetingImpl();
 	MeetingImpl meetingC = new MeetingImpl();
-	MeetingImpl meetingD = new MeetingImpl();
+	MeetingImpl meetingD = new MeetingImpl(testContactList, 0, 0, 0, 0, 0);
 	
 	
 	/**

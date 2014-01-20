@@ -3,9 +3,12 @@
  */
 package ContactManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Dave
@@ -13,6 +16,11 @@ import java.util.Set;
  */
 public class ContactManagerImpl implements ContactManager {
 
+	
+	private Set<Contact> contactsList = new HashSet();
+	private ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
+	
+	
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 		// TODO Auto-generated method stub
@@ -21,13 +29,16 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public PastMeeting getPastMeeting(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		for (Meeting m : meetingList)
+		    if (m.getId() == id)
+		return (PastMeeting) m;
+		}
 
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
-		// TODO Auto-generated method stub
+		for (Meeting m : meetingList)
+		    if (m.getId() == id)
+		return (FutureMeeting) m;
 		return null;
 	}
 

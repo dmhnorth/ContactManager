@@ -4,37 +4,33 @@
 package ContactManager;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Dave
- * Check the top of this class 
+ *  
  */
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting{
 
+	private Calendar dateOfMeeting = Calendar.getInstance();
+	Set<Contact> meetingContacts = new HashSet<Contact>();
+
+	public FutureMeetingImpl(Set<Contact> contacts, Calendar date) {
+		super(contacts, date.YEAR, date.MONTH, date.DAY_OF_MONTH, date.HOUR, date.MINUTE);
+		
+		this.dateOfMeeting = date;
+		this.meetingContacts = contacts;
 	
-	public FutureMeetingImpl(Set<Contact> contacts, int year, int month, int date, int hourOfDay, int minute) {
-		super(contacts, year, month, date, hourOfDay, minute);
 	}
 	
 	/*
-	 * mostly unneeded
-	@Override
-	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+	 * Constructor for casting
+	 */
+	public FutureMeetingImpl(MeetingImpl meeting) {
+		super(meetingContacts, dateOfMeeting, id);
+		this.dateOfMeeting = meeting.getDate();
+		this.meetingContacts = meeting.meetingContacts;
 	}
 
-	@Override
-	public Calendar getDate() {
-		super();
-		return this.dateOfMeeting;
-	}
-
-	@Override
-	public Set<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
 }
