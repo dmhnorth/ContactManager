@@ -6,6 +6,7 @@ package ContactManagerTests;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class ContactManagerTest {
 
 	String name = "David North";
 	String notes = "Some notes";
-	Calendar date = Calendar.getInstance();
+	Calendar date;
 	ContactManager cm;
 	
 	@Rule
@@ -44,7 +45,8 @@ public class ContactManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		cm = new ContactManagerImpl();		
+		cm = new ContactManagerImpl();	
+		date = Calendar.getInstance();
 	}
 
 	@Test
@@ -131,6 +133,19 @@ public class ContactManagerTest {
 		assertEquals(id, fMeeting.getId());
 		assertEquals(contacts, fMeeting.getContacts());
 		
-				
+	}
+	
+	@Test
+	public void futureMeetingInPast() throws IllegalArgumentException {
+		thrown.expect(IllegalArgumentException.class);
+		Calendar date = new GregorianCalendar();
+		date.add(Calendar.DATE, -1);
+		
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		cm.addFutureMeeting(contacts, date);
 	}
 }

@@ -23,7 +23,7 @@ public class ContactManagerImpl implements ContactManager {
 	Map<Integer, Contact> idMap;
 	Map<Integer, FutureMeeting> meetingMap; //Meeting list data structure
 	IdGenerator idGenerator;
-	Calendar now;
+	
 	
 	
 	public ContactManagerImpl() {
@@ -31,12 +31,19 @@ public class ContactManagerImpl implements ContactManager {
 		idMap = new HashMap<Integer, Contact>();
 		meetingMap = new HashMap<Integer, FutureMeeting>();
 		idGenerator = new IdGenerator();
+		
 	}
 	
 	
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException {
+		
+		Calendar now = Calendar.getInstance();
+		
+		if (date.before(now)) { 
+			throw new IllegalArgumentException();
+		}
+		
 		FutureMeeting meeting = null;
 		try {
 			meeting =  new FutureMeetingImpl(contacts, date, idGenerator.getNewId());
