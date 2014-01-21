@@ -10,6 +10,8 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -149,12 +151,10 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, date);
 	}
 	
-	/*
-	 * tests addNewPastMeeting() and getPastMeeting()
-	 */
+	
 	@Test
-	public void addAndGetPastMeetingViaId() {
-		
+	public void addAndGetPastMeetingList() {
+		int id = 0;
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
 		
@@ -164,10 +164,51 @@ public class ContactManagerTest {
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
 		cm.addNewPastMeeting(contacts, date, notes);
-		Meeting pastMeet = cm.getPastMeeting(0);
 		
-		assertEquals(pastMeet, cm.getMeeting(pastMeet.getId()));
+		cm.getPastMeetingList();
 		
 		
 	}
+	
+	
+	/*
+	 * tests addNewPastMeeting() and getPastMeeting()
+	 */
+	@Test
+	public void addAndGetPastMeetingViaId() {
+		int id = 0;
+		Calendar date = new GregorianCalendar();
+		date.add(Calendar.DATE, -1);
+		
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		cm.addNewPastMeeting(contacts, date, notes);
+		Meeting pastMeeting = cm.getPastMeeting(id);
+	}
+		//what test to I put here?
+	
+	
+	/*
+	 * tests getMeeting()
+	 */
+	@Test
+	public void testGetMeeting() throws EmptyContactException {
+		
+		cm.addNewContact("Jim", "notes"); // Started using the cm methods so exceptions are handled externally to the test
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
+		Meeting meeting = cm.getMeeting(id); // now use it to return a FutureMeeting
+		
+		assertEquals(id, meeting.getId());
+		assertEquals(contacts, meeting.getContacts());		
+	}
+		
+		
+	
 }

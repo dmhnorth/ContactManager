@@ -56,10 +56,8 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public PastMeeting getPastMeeting(int id) {
-		PastMeeting meeting = null;
-		
-		return meeting;
+	public PastMeeting getPastMeeting(int id) {		
+		return (PastMeeting) meetingMap.get(id);
 	}
 
 	@Override
@@ -69,9 +67,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Meeting getMeeting(int id) {
-		Meeting meeting = null;
-		
-		return meeting;
+		return (Meeting) meetingMap.get(id);
 	}
 	
 	@Override
