@@ -72,15 +72,19 @@ public class ContactManagerImpl implements ContactManager {
 	
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
-		List<Meeting> result = new ArrayList<Meeting>();
+		List<FutureMeeting> result;
 		
+		int contactId = contact.getId();
+		//TODO		
 		return result;	    	
 	}
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
+		List<Meeting> result;
+		//TODO
 		
-		return null;
+		return result;
 	}
 
 	@Override
@@ -106,7 +110,18 @@ public class ContactManagerImpl implements ContactManager {
 	//TODO all a bit of a mess at the moment
 	@Override
 	public void addMeetingNotes(int id, String text) {
-	
+		FutureMeeting fm = (FutureMeeting) meetingMap.get(id);
+		PastMeeting pm = null;
+		
+		try {
+			pm = new PastMeetingImpl(fm.getContacts(), fm.getDate(), id, text);
+		} catch (EmptyContactException e) {			
+			e.printStackTrace();
+		}
+		
+		meetingMap.put(id, pm);
+		
+		
 	}
 		
 	

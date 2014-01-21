@@ -27,6 +27,7 @@ import ContactManager.FutureMeeting;
 import ContactManager.IdGenerator;
 import ContactManager.Meeting;
 import ContactManager.MeetingImpl;
+import ContactManager.PastMeeting;
 
 /**
  * @author Dave
@@ -176,7 +177,7 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void addAndGetPastMeetingViaId() {
-		int id = 0;
+		
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
 		
@@ -187,9 +188,10 @@ public class ContactManagerTest {
 		
 		cm.addNewPastMeeting(contacts, date, notes);
 		Meeting pastMeeting = cm.getPastMeeting(id);
-	}
 		//what test to I put here?
-	
+		
+	}
+		
 	
 	/*
 	 * tests getMeeting()
@@ -209,6 +211,28 @@ public class ContactManagerTest {
 		assertEquals(contacts, meeting.getContacts());		
 	}
 		
+	/*
+	 * Tests if addMeetingNotes() works	
+	 */
+	@Test
+	public void testAddMeetingNotes() {
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
 		
-	
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		
+		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
+		FutureMeeting fm = cm.getFutureMeeting(id);
+		
+		
+		
+		cm.addMeetingNotes(id, "Add some notes");
+		PastMeeting pm = cm.getPastMeeting(id);
+		
+		assertEquals(fm.getContacts(), pm.getContacts());
+		assertEquals(fm.getDate(), pm.getDate());
+		assertEquals(fm.getId(), pm.getId());
+		
+	}
 }
