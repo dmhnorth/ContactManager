@@ -65,4 +65,11 @@ public class ContactManagerTest {
 		thrown.expect(NullPointerException.class);
 		cm.addNewContact(name, null);
 	}
+	
+	@Test
+	public void getContactswithNullName() throws NullPointerException {
+		thrown.expect(NullPointerException.class);
+		String name = null;
+		cm.getContacts(name);
+	}
 }

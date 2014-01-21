@@ -94,7 +94,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException();
 		}
 		
-		Contact contact = new ContactImpl(name, 0);
+		Contact contact = new ContactImpl(name, 0); // TODO
 		contact.addNotes(notes);
 		contactMap.put(name, contact);		
 	}
@@ -106,7 +106,12 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public Set<Contact> getContacts(String name) {
+	public Set<Contact> getContacts(String name) throws NullPointerException {
+		
+		if (name == null) { 
+			throw new NullPointerException(); 
+		}
+		
 		Contact namedContact = contactMap.get(name);
 		Set<Contact> contactSet = new HashSet<Contact>();
 		contactSet.add(namedContact);
