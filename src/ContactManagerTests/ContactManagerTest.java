@@ -113,6 +113,10 @@ public class ContactManagerTest {
 		cm.getContacts(0, 1, 2);
 	}
 	
+	
+	/*
+	 * tests addFutureMeeting() and getFutureMeeting()
+	 */
 	@Test
 	public void addFutureMeeting() throws EmptyContactException {
 		
@@ -124,11 +128,7 @@ public class ContactManagerTest {
 		
 		Meeting meeting = new MeetingImpl(contacts, date, IdGen.getNewId());
 		cm.addFutureMeeting(meeting.getContacts(), date);
-		
-		cm.getFutureMeeting(meeting.getId());
-		
-		assertEquals(meeting.getId(), cm.getFutureMeeting(meeting.getId()));
-		
-		
+				
+		assert(cm.getFutureMeeting(meeting.getId()));		
 	}
 }

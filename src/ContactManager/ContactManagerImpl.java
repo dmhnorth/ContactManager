@@ -21,7 +21,7 @@ public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap;
-	Map<String, Set<Meeting>> meetingMap;
+	Map<Integer, Set<Meeting>> meetingMap; //If meetings are on the same day, hence Set value
 	IdGenerator idGenerator;
 	Calendar now;
 	
@@ -35,12 +35,16 @@ public class ContactManagerImpl implements ContactManager {
 	
 	
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException {
-		if (date.after(now)) { 
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException, EmptyContactException {
+		if (date.before(now)) { 
 			throw new IllegalArgumentException();
 		}
-		meetingMap.put(key, value)
-		return 0;
+		if (contacts == null) { 
+			throw new EmptyContactException();		
+		}
+		Meeting meeting = new MeetingImpl(contacts, date, idGenerator.getNewId());
+		FutureMeeting fMeeting = (FutureMeeting) meeting; 
+		return fMeeting.getId();
 
 	}
 
