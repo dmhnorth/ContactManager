@@ -95,4 +95,12 @@ public class ContactManagerTest {
 		assertTrue(sameNameSet[1].getName() == "Jim");	
 	}
 	
+	@Test
+	public void getVariableNumberOfContactsUnknownId() throws IllegalArgumentException {
+		thrown.expect(IllegalArgumentException.class);
+		
+		cm.addNewContact("Jim", notes);
+		cm.addNewContact("Jim", notes);	
+		cm.getContacts(0, 1, 2);
+	}
 }
