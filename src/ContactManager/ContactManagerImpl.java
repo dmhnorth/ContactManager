@@ -19,11 +19,11 @@ import java.util.Set;
  */
 public class ContactManagerImpl implements ContactManager {
 	
-	Map<String, Contact> contactMap;
+	Map<String, Set<Contact>> contactMap;
 	
 	
 	public ContactManagerImpl() {
-		contactMap = new HashMap<String, Contact>();
+		contactMap = new HashMap<String, Set<Contact>>();
 	}
 	
 	
@@ -96,7 +96,16 @@ public class ContactManagerImpl implements ContactManager {
 		
 		Contact contact = new ContactImpl(name, 0); // TODO
 		contact.addNotes(notes);
-		contactMap.put(name, contact);		
+		
+		if (contactMap.get(name) == null) {
+			Set<Contact> contacts = new HashSet<Contact>();
+			contacts.add(contact);
+			contactMap.put(name, contacts);
+		} else {
+			Set<Contact> contacts = contactMap.get(name);// create variable of the current Contact Set that exists within the map in order to point at it on the next line
+			contacts.add(contact);
+		}
+				
 	}
 
 	@Override
@@ -112,10 +121,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException(); 
 		}
 		
-		Contact namedContact = contactMap.get(name);
-		Set<Contact> contactSet = new HashSet<Contact>();
-		contactSet.add(namedContact);
-		return contactSet;
+		return contactMap.get(name);
 	}
 
 	@Override

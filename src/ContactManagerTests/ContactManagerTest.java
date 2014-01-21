@@ -72,4 +72,13 @@ public class ContactManagerTest {
 		String name = null;
 		cm.getContacts(name);
 	}
+	
+	@Test
+	public void getContactsWithSameName() {
+		cm.addNewContact("Jim", notes);
+		cm.addNewContact("Jim", notes);	
+		
+		Set<Contact> sameNameSet = cm.getContacts("Jim");
+		assertTrue(sameNameSet.size() == 2);		
+	}
 }
