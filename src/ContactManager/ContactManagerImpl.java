@@ -111,16 +111,23 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void addMeetingNotes(int id, String text) throws IllegalArgumentException {
 		
+		if (text == null) {
+			throw new NullPointerException();
+		}
+		
 		Calendar now = Calendar.getInstance();
 		FutureMeeting fm = (FutureMeeting) meetingMap.get(id);		
 		
-		if (fm.getDate().after(now)) { 
-			throw new IllegalStateException();
-		}		
+			if (fm == null) {
+				throw new IllegalArgumentException();
+			}
+			
+			if (fm.getDate().after(now)) { 
+				throw new IllegalStateException();
+			}		
 		
-		if (fm == null) {
-			throw new IllegalArgumentException();
-		}
+		
+		
 		
 		
 		PastMeeting pm = null;

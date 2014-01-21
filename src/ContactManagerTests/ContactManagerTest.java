@@ -237,19 +237,29 @@ public class ContactManagerTest {
 	}
 
 	/*
-	 * tests addMeetingNotes() IllegalArgumentExceptions
+	 * tests addMeetingNotes() IllegalArgumentException
 	 */
 	@Test
-	public void testaddMeetingNotesIllegalArgumentExceptions(){
+	public void addMeetingNotesIllegalArgumentExceptions(){
 		thrown.expect(IllegalArgumentException.class);
 		cm.addMeetingNotes(0, notes);
 	}
 	
 	/*
-	 * tests addMeetingNotes() IllegalArgumentExceptions
+	 * tests addMeetingNotes() NullPointerException
 	 */
 	@Test
-	public void testaddMeetingNotesIllegalStateException(){
+	public void addMeetingNotesNullPointerExceptions(){
+		thrown.expect(NullPointerException.class);
+		cm.addMeetingNotes(0, null);
+	}
+	
+	
+	/*
+	 * tests addMeetingNotes() IllegalStateException
+	 */
+	@Test
+	public void addMeetingNotesIllegalStateException(){
 		thrown.expect(IllegalStateException.class);
 		
 		Calendar date = new GregorianCalendar();
