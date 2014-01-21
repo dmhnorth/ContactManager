@@ -5,6 +5,8 @@ package ContactManagerTests;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
@@ -14,9 +16,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import ContactManager.Contact;
+import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.EmptyContactException;
+import ContactManager.IdGenerator;
+import ContactManager.Meeting;
+import ContactManager.MeetingImpl;
 
 /**
  * @author Dave
@@ -26,6 +32,8 @@ public class ContactManagerTest {
 
 	String name = "David North";
 	String notes = "Some notes";
+	Calendar date = Calendar.getInstance();
+	IdGenerator IdGen;
 	ContactManager cm;
 	
 	@Rule
@@ -37,6 +45,7 @@ public class ContactManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		cm = new ContactManagerImpl();
+		IdGen = new IdGenerator();
 	}
 
 	@Test
@@ -102,5 +111,24 @@ public class ContactManagerTest {
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		cm.getContacts(0, 1, 2);
+	}
+	
+	@Test
+	public void addFutureMeeting() throws EmptyContactException {
+		
+		Set<Contact> contacts = new HashSet<Contact>();
+		Contact contactA = new ContactImpl("Jim", IdGen.getNewId());
+		Contact contactB = new ContactImpl("John", IdGen.getNewId());
+		contacts.add(contactA);
+		contacts.add(contactB);
+		
+		Meeting meeting = new MeetingImpl(contacts, date, IdGen.getNewId());
+		cm.addFutureMeeting(meeting.getContacts(), date);
+		
+		cm.getFutureMeeting(meeting.getId());
+		
+		assertEquals(meeting.getId(), cm.getFutureMeeting(meeting.getId()));
+		
+		
 	}
 }

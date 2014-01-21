@@ -21,19 +21,27 @@ public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap;
+	Map<String, Set<Meeting>> meetingMap;
 	IdGenerator idGenerator;
+	Calendar now;
+	
 	
 	public ContactManagerImpl() {
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
 		idGenerator = new IdGenerator();
+		Calendar now = Calendar.getInstance();
 	}
 	
 	
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-		// TODO Auto-generated method stub
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException {
+		if (date.after(now)) { 
+			throw new IllegalArgumentException();
+		}
+		meetingMap.put(key, value)
 		return 0;
+
 	}
 
 	@Override
