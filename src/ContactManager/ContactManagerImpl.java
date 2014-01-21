@@ -41,7 +41,7 @@ public class ContactManagerImpl implements ContactManager {
 		Calendar now = Calendar.getInstance();
 		
 		if (date.before(now)) { 
-			throw new IllegalArgumentException();
+			throw new IllegalStateException();
 		}
 		
 		FutureMeeting meeting = null;
@@ -109,8 +109,20 @@ public class ContactManagerImpl implements ContactManager {
 	
 	//TODO all a bit of a mess at the moment
 	@Override
-	public void addMeetingNotes(int id, String text) {
-		FutureMeeting fm = (FutureMeeting) meetingMap.get(id);
+	public void addMeetingNotes(int id, String text) throws IllegalArgumentException {
+		
+		Calendar now = Calendar.getInstance();
+		FutureMeeting fm = (FutureMeeting) meetingMap.get(id);		
+		
+		if (fm.getDate().after(now)) { 
+			throw new IllegalStateException();
+		}		
+		
+		if (fm == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		
 		PastMeeting pm = null;
 		
 		try {

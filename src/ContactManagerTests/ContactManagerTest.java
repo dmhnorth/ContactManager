@@ -235,4 +235,35 @@ public class ContactManagerTest {
 		assertEquals(fm.getId(), pm.getId());
 		
 	}
+
+	/*
+	 * tests addMeetingNotes() IllegalArgumentExceptions
+	 */
+	@Test
+	public void testaddMeetingNotesIllegalArgumentExceptions(){
+		thrown.expect(IllegalArgumentException.class);
+		cm.addMeetingNotes(0, notes);
+	}
+	
+	/*
+	 * tests addMeetingNotes() IllegalArgumentExceptions
+	 */
+	@Test
+	public void testaddMeetingNotesIllegalStateException(){
+		thrown.expect(IllegalStateException.class);
+		
+		Calendar date = new GregorianCalendar();
+		date.add(Calendar.DATE, -1);
+		
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		
+		int id = cm.addFutureMeeting(contacts, date);
+		FutureMeeting fm = cm.getFutureMeeting(id);
+		
+		cm.addMeetingNotes(id, notes);
+	}
 }
