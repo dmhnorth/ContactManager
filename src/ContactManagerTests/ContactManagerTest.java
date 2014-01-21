@@ -81,4 +81,14 @@ public class ContactManagerTest {
 		Set<Contact> sameNameSet = cm.getContacts("Jim");
 		assertTrue(sameNameSet.size() == 2);		
 	}
+	
+	@Test
+	public void getVariableNumberOfContactsViaId() {
+		cm.addNewContact("Jim", notes);
+		cm.addNewContact("Jim", notes);	
+		
+		Set<Contact> sameNameSet = cm.getContacts(0, 1);
+		assertTrue(sameNameSet.size() == 2);
+	}
+	
 }

@@ -20,6 +20,7 @@ import java.util.Set;
 public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
+	Map<Integer, Contact> idMap;
 	
 	
 	public ContactManagerImpl() {
@@ -97,6 +98,8 @@ public class ContactManagerImpl implements ContactManager {
 		Contact contact = new ContactImpl(name, 0); // TODO
 		contact.addNotes(notes);
 		
+		idMap.put(contact.getId(), contact);	//mirrors the contactMap
+		
 		if (contactMap.get(name) == null) {
 			Set<Contact> contacts = new HashSet<Contact>();
 			contacts.add(contact);
@@ -114,6 +117,10 @@ public class ContactManagerImpl implements ContactManager {
 		return null;
 	}
 
+	
+	/*
+	 * using the contactMap we have now converted the values into Sets so it works as a matrix
+	 */
 	@Override
 	public Set<Contact> getContacts(String name) throws NullPointerException {
 		
