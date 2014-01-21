@@ -90,7 +90,7 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void addNewContact(String name, String notes) throws NullPointerException {
 		
-		if (name == null) { 
+		if (name == null || notes == null) { 
 			throw new NullPointerException();
 		}
 		
