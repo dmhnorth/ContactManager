@@ -150,7 +150,7 @@ public class ContactManagerTest {
 	}
 	
 	/*
-	 * tests addPastMeeting() and getPastMeeting()
+	 * tests addNewPastMeeting() and getPastMeeting()
 	 */
 	@Test
 	public void addAndGetPastMeetingViaId() {

@@ -21,7 +21,7 @@ public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap;
-	Map<Integer, FutureMeeting> meetingMap; //Meeting list data structure
+	Map<Integer, Meeting> meetingMap; //Meeting list data structure
 	IdGenerator idGenerator;
 	
 	
@@ -29,7 +29,7 @@ public class ContactManagerImpl implements ContactManager {
 	public ContactManagerImpl() {
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
-		meetingMap = new HashMap<Integer, FutureMeeting>();
+		meetingMap = new HashMap<Integer, Meeting>();
 		idGenerator = new IdGenerator();
 		
 	}
@@ -64,7 +64,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {		
-		return meetingMap.get(id);
+		return (FutureMeeting) meetingMap.get(id);
 	}
 
 	@Override
@@ -95,8 +95,16 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) {
-		// TODO Auto-generated method stub
 		
+		Calendar now = Calendar.getInstance();
+		Meeting pastMeeting = null;
+		
+		try {
+			pastMeeting = new PastMeetingImpl(contacts, date, idGenerator.getNewId(), text);
+		} catch (EmptyContactException e) {
+			e.printStackTrace();
+		}
+		meetingMap.put(pastMeeting.getId(), pastMeeting);		
 	}
 	
 	//TODO all a bit of a mess at the moment
