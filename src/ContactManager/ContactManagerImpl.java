@@ -72,18 +72,13 @@ public class ContactManagerImpl implements ContactManager {
 	
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
-		List<FutureMeeting> result;
-		
-		int contactId = contact.getId();
 		//TODO		
 		return result;	    	
 	}
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		List<Meeting> result;
 		//TODO
-		
 		return result;
 	}
 
@@ -107,9 +102,9 @@ public class ContactManagerImpl implements ContactManager {
 		meetingMap.put(pastMeeting.getId(), pastMeeting);		
 	}
 	
-	//TODO all a bit of a mess at the moment
+	
 	@Override
-	public void addMeetingNotes(int id, String text) throws IllegalArgumentException {
+	public void addMeetingNotes(int id, String text) throws IllegalArgumentException, NullPointerException, IllegalArgumentException {
 		
 		if (text == null) {
 			throw new NullPointerException();
@@ -126,10 +121,6 @@ public class ContactManagerImpl implements ContactManager {
 				throw new IllegalStateException();
 			}		
 		
-		
-		
-		
-		
 		PastMeeting pm = null;
 		
 		try {
@@ -139,8 +130,6 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		
 		meetingMap.put(id, pm);
-		
-		
 	}
 		
 	

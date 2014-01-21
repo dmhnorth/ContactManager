@@ -150,6 +150,7 @@ public class ContactManagerTest {
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
 		cm.addFutureMeeting(contacts, date);
+		
 	}
 	
 	
