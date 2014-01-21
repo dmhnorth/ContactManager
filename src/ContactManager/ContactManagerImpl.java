@@ -21,7 +21,7 @@ public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap;
-	Map<Integer, Set<Meeting>> meetingMap; //If meetings are on the same day, hence Set value
+	Map<Integer, FutureMeeting> meetingMap; //Meeting list data structure
 	IdGenerator idGenerator;
 	Calendar now;
 	
@@ -29,23 +29,23 @@ public class ContactManagerImpl implements ContactManager {
 	public ContactManagerImpl() {
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
+		meetingMap = new HashMap<Integer, FutureMeeting>();
 		idGenerator = new IdGenerator();
-		Calendar now = Calendar.getInstance();
 	}
 	
 	
 	@Override
-	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException, EmptyContactException {
-		if (date.before(now)) { 
-			throw new IllegalArgumentException();
-		}
-		if (contacts == null) { 
-			throw new EmptyContactException();		
-		}
-		Meeting meeting = new MeetingImpl(contacts, date, idGenerator.getNewId());
-		FutureMeeting fMeeting = (FutureMeeting) meeting; 
-		return fMeeting.getId();
+	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 
+		FutureMeeting meeting = null;
+		try {
+			meeting =  new FutureMeetingImpl(contacts, date, idGenerator.getNewId());
+		} catch (EmptyContactException e) {
+			e.printStackTrace();
+		}		
+		//Add meeting to the data structure
+		meetingMap.put(meeting.getId(), meeting);		
+		return meeting.getId();
 	}
 
 	@Override
@@ -56,10 +56,8 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public FutureMeeting getFutureMeeting(int id) {
-		FutureMeeting meeting = null;
-		
-		return meeting;
+	public FutureMeeting getFutureMeeting(int id) {		
+		return meetingMap.get(id);
 	}
 
 	@Override

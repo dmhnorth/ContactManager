@@ -20,6 +20,7 @@ import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.EmptyContactException;
+import ContactManager.FutureMeeting;
 import ContactManager.IdGenerator;
 import ContactManager.Meeting;
 import ContactManager.MeetingImpl;
@@ -33,7 +34,6 @@ public class ContactManagerTest {
 	String name = "David North";
 	String notes = "Some notes";
 	Calendar date = Calendar.getInstance();
-	IdGenerator IdGen;
 	ContactManager cm;
 	
 	@Rule
@@ -44,8 +44,7 @@ public class ContactManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		cm = new ContactManagerImpl();
-		IdGen = new IdGenerator();
+		cm = new ContactManagerImpl();		
 	}
 
 	@Test
@@ -120,15 +119,18 @@ public class ContactManagerTest {
 	@Test
 	public void addFutureMeeting() throws EmptyContactException {
 		
-		Set<Contact> contacts = new HashSet<Contact>();
-		Contact contactA = new ContactImpl("Jim", IdGen.getNewId());
-		Contact contactB = new ContactImpl("John", IdGen.getNewId());
-		contacts.add(contactA);
-		contacts.add(contactB);
 		
-		Meeting meeting = new MeetingImpl(contacts, date, IdGen.getNewId());
-		cm.addFutureMeeting(meeting.getContacts(), date);
+		cm.addNewContact("Jim", "notes"); // Started using the cm methods so exceptions are handled externally to the test
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
+		FutureMeeting fMeeting = cm.getFutureMeeting(id); // now use it to return a FutureMeeting
+		
+		assertEquals(id, fMeeting.getId());
+		assertEquals(contacts, fMeeting.getContacts());
+		
 				
-		assert(cm.getFutureMeeting(meeting.getId()));		
 	}
 }
