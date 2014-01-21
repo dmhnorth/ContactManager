@@ -148,4 +148,26 @@ public class ContactManagerTest {
 		
 		cm.addFutureMeeting(contacts, date);
 	}
+	
+	/*
+	 * tests addPastMeeting() and getPastMeeting()
+	 */
+	@Test
+	public void addAndGetPastMeetingViaId() {
+		
+		Calendar date = new GregorianCalendar();
+		date.add(Calendar.DATE, -1);
+		
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		cm.addNewPastMeeting(contacts, date, notes);
+		Meeting pastMeet = cm.getPastMeeting(0);
+		
+		assertEquals(pastMeet, cm.getMeeting(pastMeet.getId()));
+		
+		
+	}
 }
