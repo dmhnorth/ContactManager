@@ -79,7 +79,8 @@ public class ContactManagerTest {
 		cm.addNewContact("Jim", notes);	
 		
 		Set<Contact> sameNameSet = cm.getContacts("Jim");
-		assertTrue(sameNameSet.size() == 2);		
+		assertTrue(sameNameSet.size() == 2);	
+		
 	}
 	
 	@Test
@@ -87,8 +88,11 @@ public class ContactManagerTest {
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		
-		Set<Contact> sameNameSet = cm.getContacts(0, 1);
-		assertTrue(sameNameSet.size() == 2);
+		Contact[] sameNameSet = cm.getContacts(0, 1).toArray(new Contact[1]);
+		System.out.println(sameNameSet[0]);
+		System.out.println(sameNameSet[1]);
+		assertTrue(sameNameSet[0].getName() == "Jim");	
+		assertTrue(sameNameSet[1].getName() == "Jim");	
 	}
 	
 }

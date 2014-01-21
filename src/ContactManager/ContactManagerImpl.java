@@ -21,10 +21,12 @@ public class ContactManagerImpl implements ContactManager {
 	
 	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap;
-	
+	IdGenerator idGenerator;
 	
 	public ContactManagerImpl() {
 		contactMap = new HashMap<String, Set<Contact>>();
+		idMap = new HashMap<Integer, Contact>();
+		idGenerator = new IdGenerator();
 	}
 	
 	
@@ -95,7 +97,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException();
 		}
 		
-		Contact contact = new ContactImpl(name, 0); // TODO
+		Contact contact = new ContactImpl(name, idGenerator.getNewId()); // TODO
 		contact.addNotes(notes);
 		
 		idMap.put(contact.getId(), contact);	//mirrors the contactMap
@@ -111,10 +113,18 @@ public class ContactManagerImpl implements ContactManager {
 				
 	}
 
+	/*
+	 * 
+	 */
 	@Override
 	public Set<Contact> getContacts(int... ids) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Set<Contact> contacts = new HashSet<Contact>();
+		for (int id : ids) {
+			contacts.add(idMap.get(id));
+		}
+		
+		return contacts;
 	}
 
 	

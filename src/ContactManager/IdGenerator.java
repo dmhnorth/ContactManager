@@ -9,6 +9,11 @@ package ContactManager;
  */
 public class IdGenerator {
 	
-	private static int counter = 0;
+	private static int counter = -1;
 
+	
+	public int getNewId(){
+		counter++;
+		return counter;
+	}
 }
