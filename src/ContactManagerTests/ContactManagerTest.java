@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.AssertionFailedError;
@@ -174,7 +175,7 @@ public class ContactManagerTest {
 	
 	
 	/*
-	 * tests addNewPastMeeting() and getPastMeeting()
+	 * tests addNewPastMeeting()
 	 */
 	@Test
 	public void addAndGetPastMeetingViaId() {
@@ -182,16 +183,15 @@ public class ContactManagerTest {
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
 		
-		cm.addNewContact("Jim", "notes");
-		cm.addNewContact("Jim", "Some notes");
-		
-		Set<Contact> contacts = cm.getContacts("Jim");
-		
+		cm.addNewContact("jim", notes);
+		Set<Contact> contacts = cm.getContacts("jim");
+	 	Contact contact = contacts.toArray(new Contact[0])[0];
+				
 		cm.addNewPastMeeting(contacts, date, notes);
-		int id = 0;
-		Meeting pastMeeting = cm.getPastMeeting(id);
-		//what test to I put here?
+		PastMeeting ml = cm.getPastMeetingList(contact).get(0);
 		
+		assertEquals(ml.getContacts(), contacts);		
+				
 	}
 		
 	
