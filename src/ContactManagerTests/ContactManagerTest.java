@@ -139,18 +139,18 @@ public class ContactManagerTest {
 	}
 	
 	@Test
-	public void futureMeetingInPast() throws IllegalArgumentException {
+	public void futureMeetingInPast() throws IllegalArgumentException, InterruptedException {
 		thrown.expect(IllegalArgumentException.class);
 		Calendar date = new GregorianCalendar();
-		date.add(Calendar.DATE, -1);
 		
 		cm.addNewContact("Jim", "notes");
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		cm.addFutureMeeting(contacts, date);
-		
+		int id = cm.addFutureMeeting(contacts, date);
+		Thread.sleep(100);
+		cm.getFutureMeeting(id);		
 	}
 	
 	
@@ -167,7 +167,7 @@ public class ContactManagerTest {
 		
 		cm.addNewPastMeeting(contacts, date, notes);
 		
-		cm.getPastMeetingList();
+		//cm.getPastMeetingList();
 		
 		
 	}
@@ -188,6 +188,7 @@ public class ContactManagerTest {
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
 		cm.addNewPastMeeting(contacts, date, notes);
+		int id = 0;
 		Meeting pastMeeting = cm.getPastMeeting(id);
 		//what test to I put here?
 		
@@ -222,14 +223,14 @@ public class ContactManagerTest {
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		
+		date.set(2040, 1, 1);
 		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
 		FutureMeeting fm = cm.getFutureMeeting(id);
 		
 		
 		
 		cm.addMeetingNotes(id, "Add some notes");
-		PastMeeting pm = cm.getPastMeeting(id);
+		Meeting pm = cm.getMeeting(id);
 		
 		assertEquals(fm.getContacts(), pm.getContacts());
 		assertEquals(fm.getDate(), pm.getDate());
@@ -276,5 +277,26 @@ public class ContactManagerTest {
 		FutureMeeting fm = cm.getFutureMeeting(id);
 		
 		cm.addMeetingNotes(id, notes);
+	}
+	
+	/*
+	 * past meeting exception test
+	 */
+	@Test
+	public void getPastMeetingExceptionTest() throws IllegalArgumentException {
+		thrown.expect(IllegalArgumentException.class);
+		
+		cm.addNewContact("Jim", "notes");
+		cm.addNewContact("Jim", "Some notes");
+		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		Calendar future = Calendar.getInstance();
+		future.set(3000, 1, 1);
+		
+		int id = cm.addFutureMeeting(contacts, future);
+		
+		
+		cm.getPastMeeting(id);
 	}
 }

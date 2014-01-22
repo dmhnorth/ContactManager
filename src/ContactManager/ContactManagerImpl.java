@@ -56,12 +56,27 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public PastMeeting getPastMeeting(int id) {		
-		return (PastMeeting) meetingMap.get(id);
+	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {		
+		
+		Calendar now = Calendar.getInstance();
+		Meeting pm = meetingMap.get(id);
+		
+		if (pm.getDate().after(now)) {
+			throw new IllegalArgumentException();
+		}
+				
+		
+		return (PastMeeting) pm;
 	}
 
 	@Override
-	public FutureMeeting getFutureMeeting(int id) {		
+	public FutureMeeting getFutureMeeting(int id) throws IllegalArgumentException {
+		
+		Calendar now = Calendar.getInstance();
+		
+		if (getMeeting(id).getDate().before(now)) {
+			throw new IllegalArgumentException();
+		}
 		return (FutureMeeting) meetingMap.get(id);
 	}
 
@@ -73,13 +88,13 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
 		//TODO		
-		return result;	    	
+		return null;	    	
 	}
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 		//TODO
-		return result;
+		return null;
 	}
 
 	@Override
@@ -117,7 +132,7 @@ public class ContactManagerImpl implements ContactManager {
 				throw new IllegalArgumentException();
 			}
 			
-			if (fm.getDate().after(now)) { 
+			if (fm.getDate().before(now)) { 
 				throw new IllegalStateException();
 			}		
 		
@@ -176,7 +191,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	
 	/*
-	 * using the contactMap we have now converted the values into Sets so it works as a matrix
+	 * Using a contactMap we have now converted the values into Sets so it works as a matrix
 	 */
 	@Override
 	public Set<Contact> getContacts(String name) throws NullPointerException {
