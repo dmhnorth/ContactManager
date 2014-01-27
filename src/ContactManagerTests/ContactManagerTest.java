@@ -199,7 +199,25 @@ public class ContactManagerTest {
 		assertEquals(ml.getContacts(), contacts);		
 				
 	}
+	
+	/*
+	 * tests the addNewPastMeetingViaId IllegalArgumentException
+	 * if contacts parameter is empty or contact does not exist in database
+	 */
+	@Test
+	public void addNewPastMeetingIllegalArgumentException() {
+		thrown.expect(IllegalArgumentException.class);
+		cm.addNewPastMeeting(null, date, notes);
 		
+	}
+	
+	/*
+	 * 
+	 */
+	
+	
+	
+	
 	
 	/*
 	 * tests getMeeting() works

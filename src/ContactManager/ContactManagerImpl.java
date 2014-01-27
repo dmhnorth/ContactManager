@@ -116,13 +116,16 @@ public class ContactManagerImpl implements ContactManager {
 		        }
 			}	
 		}
-		for (PastMeeting d : result)
-		System.out.println(d.getId());
 		return result;
 	}
 
 	@Override
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) {
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) throws IllegalArgumentException{
+		
+		if (contacts == null || date == null || text == null){
+			throw new IllegalArgumentException();
+		}
+		
 		
 		Meeting pastMeeting = null;
 		
