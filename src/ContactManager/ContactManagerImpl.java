@@ -104,7 +104,6 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) {
 		
-		Calendar now = Calendar.getInstance();
 		Meeting pastMeeting = null;
 		
 		try {

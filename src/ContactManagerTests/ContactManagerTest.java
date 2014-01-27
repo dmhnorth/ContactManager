@@ -49,8 +49,11 @@ public class ContactManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
 		cm = new ContactManagerImpl();	
 		date = Calendar.getInstance();
+		
+		
 	}
 
 	@Test
@@ -146,14 +149,14 @@ public class ContactManagerTest {
 	@Test
 	public void addfutureMeetingInPast() throws IllegalArgumentException, InterruptedException {
 		thrown.expect(IllegalArgumentException.class);
-		Calendar date = new GregorianCalendar();
+		Calendar date2 = new GregorianCalendar();
 		
 		cm.addNewContact("Jim", "notes");
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		int id = cm.addFutureMeeting(contacts, date);
+		int id = cm.addFutureMeeting(contacts, date2);
 		Thread.sleep(100);
 		cm.getFutureMeeting(id);		
 	}
@@ -161,15 +164,15 @@ public class ContactManagerTest {
 	
 	@Test
 	public void addAndGetPastMeetingList() {
-		Calendar date = new GregorianCalendar();
-		date.add(Calendar.DATE, -1);
+		Calendar date3 = new GregorianCalendar();
+		date3.add(Calendar.DATE, -1);
 		
 		cm.addNewContact("Jim", "notes");
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		cm.addNewPastMeeting(contacts, date, notes);
+		cm.addNewPastMeeting(contacts, date3, notes);
 		
 		//cm.getPastMeetingList();
 		
@@ -178,19 +181,19 @@ public class ContactManagerTest {
 	
 	
 	/*
-	 * tests addNewPastMeeting()
+	 * tests addNewPastMeeting() UNFINISHED IMPL
 	 */
 	@Test
 	public void addNewPastMeetingViaId() {
 		
-		Calendar date = new GregorianCalendar();
-		date.add(Calendar.DATE, -1);
+		Calendar date4 = new GregorianCalendar();
+		date4.add(Calendar.DATE, -1);
 		
 		cm.addNewContact("jim", notes);
 		Set<Contact> contacts = cm.getContacts("jim");
 	 	Contact contact = contacts.toArray(new Contact[0])[0];
 				
-		cm.addNewPastMeeting(contacts, date, notes);
+		cm.addNewPastMeeting(contacts, date4, notes);
 		PastMeeting ml = cm.getPastMeetingList(contact).get(0);
 		
 		assertEquals(ml.getContacts(), contacts);		
