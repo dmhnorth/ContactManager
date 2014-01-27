@@ -212,8 +212,15 @@ public class ContactManagerTest {
 	}
 	
 	/*
-	 * 
+	 * tests the NullPointerException on addNewPastMeeting
 	 */
+	@Test
+	public void addNewPastMeetingNullPointerException() {
+		thrown.expect(NullPointerException.class);
+		cm.addNewContact("jim", notes);
+		Set<Contact> contacts = cm.getContacts("jim");
+		cm.addNewPastMeeting(contacts, null, notes);
+	}
 	
 	
 	
