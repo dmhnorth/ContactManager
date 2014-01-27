@@ -3,7 +3,9 @@
  */
 package ContactManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -97,8 +99,26 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Calendar now = new GregorianCalendar();		
+		List<PastMeeting> result = new ArrayList<PastMeeting>();
+		List<PastMeeting> pastMeetings = new ArrayList<PastMeeting>();
+		
+		for (Meeting m: meetingMap.values()) {
+			if (m.getDate().before(now)) {
+				pastMeetings.add((PastMeeting) m);
+			}
+			
+		for (Meeting m2 : pastMeetings)
+			for (Contact c : m2.getContacts()){
+		        if (c.equals(contact)) {  
+				result.add((PastMeeting) m2);
+		        }
+			}	
+		}
+		for (PastMeeting d : result)
+		System.out.println(d.getId());
+		return result;
 	}
 
 	@Override

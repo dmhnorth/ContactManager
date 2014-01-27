@@ -101,8 +101,9 @@ public class ContactManagerTest {
 	}
 	
 	/*
-	 * tests getContactsViaId() but currently doesn't run correctly fi run
-	 * at the same time as the other tests due to the NullPointerException
+	 * tests getContactsViaId() but currently doesn't run correctly when run
+	 * at the same time as the other tests due to the IllegalArgumentException within
+	 * the above method mentioned
 	 */
 	@Test
 	public void getContactsViaId() {
@@ -117,7 +118,7 @@ public class ContactManagerTest {
 	}
 	
 	@Test
-	public void getContactsUnknownId() throws IllegalArgumentException {
+	public void getContactsWithUnknownId() throws IllegalArgumentException {
 		thrown.expect(IllegalArgumentException.class);
 		
 		cm.addNewContact("Jim", notes);
@@ -181,14 +182,13 @@ public class ContactManagerTest {
 	
 	
 	/*
-	 * tests addNewPastMeeting() UNFINISHED IMPL
+	 * tests addNewPastMeeting()
 	 */
 	@Test
 	public void addNewPastMeetingViaId() {
 		
 		Calendar date4 = new GregorianCalendar();
 		date4.add(Calendar.DATE, -1);
-		
 		cm.addNewContact("jim", notes);
 		Set<Contact> contacts = cm.getContacts("jim");
 	 	Contact contact = contacts.toArray(new Contact[0])[0];
@@ -202,7 +202,7 @@ public class ContactManagerTest {
 		
 	
 	/*
-	 * tests getMeeting()
+	 * tests getMeeting() works
 	 */
 	@Test
 	public void testGetMeeting() throws EmptyContactException {
