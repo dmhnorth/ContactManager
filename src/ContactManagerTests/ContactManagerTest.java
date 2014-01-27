@@ -97,8 +97,12 @@ public class ContactManagerTest {
 		
 	}
 	
+	/*
+	 * tests getContactsViaId() but currently doesn't run correctly fi run
+	 * at the same time as the other tests due to the NullPointerException
+	 */
 	@Test
-	public void getVariableNumberOfContactsViaId() {
+	public void getContactsViaId() {
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		
@@ -110,7 +114,7 @@ public class ContactManagerTest {
 	}
 	
 	@Test
-	public void getVariableNumberOfContactsUnknownId() throws IllegalArgumentException {
+	public void getContactsUnknownId() throws IllegalArgumentException {
 		thrown.expect(IllegalArgumentException.class);
 		
 		cm.addNewContact("Jim", notes);
@@ -140,7 +144,7 @@ public class ContactManagerTest {
 	}
 	
 	@Test
-	public void futureMeetingInPast() throws IllegalArgumentException, InterruptedException {
+	public void addfutureMeetingInPast() throws IllegalArgumentException, InterruptedException {
 		thrown.expect(IllegalArgumentException.class);
 		Calendar date = new GregorianCalendar();
 		
@@ -157,7 +161,6 @@ public class ContactManagerTest {
 	
 	@Test
 	public void addAndGetPastMeetingList() {
-		int id = 0;
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
 		
@@ -178,7 +181,7 @@ public class ContactManagerTest {
 	 * tests addNewPastMeeting()
 	 */
 	@Test
-	public void addAndGetPastMeetingViaId() {
+	public void addNewPastMeetingViaId() {
 		
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
@@ -242,7 +245,7 @@ public class ContactManagerTest {
 	 * tests addMeetingNotes() IllegalArgumentException
 	 */
 	@Test
-	public void addMeetingNotesIllegalArgumentExceptions(){
+	public void addMeetingNotesIllegalArgumentException(){
 		thrown.expect(IllegalArgumentException.class);
 		cm.addMeetingNotes(0, notes);
 	}
@@ -251,7 +254,7 @@ public class ContactManagerTest {
 	 * tests addMeetingNotes() NullPointerException
 	 */
 	@Test
-	public void addMeetingNotesNullPointerExceptions(){
+	public void addMeetingNotesNullPointerException(){
 		thrown.expect(NullPointerException.class);
 		cm.addMeetingNotes(0, null);
 	}
