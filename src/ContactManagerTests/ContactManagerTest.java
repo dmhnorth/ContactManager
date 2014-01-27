@@ -13,6 +13,7 @@ import java.util.Set;
 
 import junit.framework.AssertionFailedError;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -56,6 +57,18 @@ public class ContactManagerTest {
 		
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+		
+		cm = null;
+		date = null;
+		
+		
+	}
+	
 	@Test
 	public void addNewContact() {
 		
@@ -162,7 +175,7 @@ public class ContactManagerTest {
 		cm.getFutureMeeting(id);		
 	}
 	
-	
+	/*
 	@Test
 	public void addAndGetPastMeetingList() {
 		Calendar date3 = new GregorianCalendar();
@@ -179,7 +192,7 @@ public class ContactManagerTest {
 		
 		
 	}
-	
+	*/
 	
 	/*
 	 * tests addNewPastMeeting()
@@ -207,7 +220,9 @@ public class ContactManagerTest {
 	@Test
 	public void addNewPastMeetingIllegalArgumentException() {
 		thrown.expect(IllegalArgumentException.class);
-		cm.addNewPastMeeting(null, date, notes);
+		cm.addNewContact("jim", notes);
+		Set<Contact> contacts = cm.getContacts("jim");
+		cm.addNewPastMeeting(contacts, date, notes);
 		
 	}
 	

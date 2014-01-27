@@ -126,6 +126,17 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException();
 		}
 		
+		boolean contactsExist = false;
+		for (Contact a : contacts)
+			for(Set<Contact> b : contactMap.values())
+			if (a.equals(b)){
+				contactsExist = true;
+		}
+		
+		if (!contactsExist) {
+			throw new IllegalArgumentException();
+		}
+		
 		
 		Meeting pastMeeting = null;
 		
