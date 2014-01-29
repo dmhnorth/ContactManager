@@ -383,9 +383,9 @@ public class ContactManagerTest {
 		
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
 		
-		//initialise meetings in the cm
-		cm.addNewPastMeeting(contacts, pastest, "pastest");
+		//initialise meetings in the cm, out of order
 		cm.addNewPastMeeting(contacts, past, "past");
+		cm.addNewPastMeeting(contacts, pastest, "pastest");
 		cm.addNewPastMeeting(contacts, future, "future");
 		cm.addNewPastMeeting(contacts, futurest, "futurest");
 		
@@ -402,11 +402,11 @@ public class ContactManagerTest {
 		meetingsOrdered.add(meet3);
 		meetingsOrdered.add(meet4);
 		
-		Meeting a = cm.getPastMeetingList(contactjim).toArray(new Meeting[0])[0];
-		Meeting b = meetingsOrdered.toArray(new Meeting[0])[0];
+		PastMeeting a = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
+		PastMeeting b = meetingsOrdered.toArray(new PastMeeting[0])[0];
 		
 		//TEST PASSES BUT NEEDS TO FAIL! CHOOSE ORDER OF ADDING TO CM
-		assertEquals(a.getId(), b.getId());
+		assertEquals(a.getNotes(), b.getNotes());
 
 	}
 }
