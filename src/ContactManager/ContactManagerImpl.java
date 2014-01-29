@@ -82,13 +82,30 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Meeting getMeeting(int id) {
-		return (Meeting) meetingMap.get(id);
+		return meetingMap.get(id);
 	}
 	
-	private List<Meeting> meetSort() {
+	private List<Meeting> meetSort(List<Meeting> meeting) throws IllegalArgumentException{
 		
-		// TODO create a meeting sorting algorithm
-		return null;
+		if (meeting == null) {
+			throw new IllegalArgumentException("The meeting list is empty.");
+		}		
+		
+		List<Meeting> result = new ArrayList<Meeting>();
+		
+		result.add(meeting.get(0));
+		
+		Meeting pointer = result.get(0);
+		
+		for (Meeting m : meeting) {
+			if (m.getDate().after(pointer.getDate())) {
+				result.add(m);
+			} else {
+				result.add(meeting.size(), m);
+			}
+		}
+		return result;
+		
 		
 	}
 	
@@ -125,6 +142,7 @@ public class ContactManagerImpl implements ContactManager {
 		        }
 			}	
 		}
+		meetSort(result);	// add casting
 		return result;
 	}
 
