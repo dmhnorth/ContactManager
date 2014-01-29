@@ -8,15 +8,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.AssertionFailedError;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -27,9 +25,7 @@ import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
-import ContactManager.FutureMeetingImpl;
 import ContactManager.IdGenerator;
-import ContactManager.IdGeneratorImpl;
 import ContactManager.Meeting;
 import ContactManager.MeetingImpl;
 import ContactManager.PastMeeting;
@@ -121,11 +117,8 @@ public class ContactManagerTest {
 	 * the above method mentioned
 	 */
 	@Test
-	public void RACEERRORgetContactsViaId() {
-		
-		
-		
-		
+	public void getContactsViaId() {
+				
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		//this is not working because of the ids set
@@ -198,7 +191,6 @@ public class ContactManagerTest {
 		Set<Contact> testList = new HashSet<Contact>();
 		testList.add(contactjim);	
 		
-		PastMeeting pm = new PastMeetingImpl(testList, past, 0, notes);
 		cm.addNewPastMeeting(testList, past, notes);
 		
 		cm.addFutureMeeting(testList, future);
@@ -214,7 +206,7 @@ public class ContactManagerTest {
 	 * tests addNewPastMeeting()
 	 */
 	@Test
-	public void BROKENBYEXaddNewPastMeetingViaId() {
+	public void addNewPastMeetingViaId() {
 		
 		Calendar date4 = new GregorianCalendar();
 		date4.add(Calendar.DATE, -1);
@@ -342,6 +334,7 @@ public class ContactManagerTest {
 		FutureMeeting fm = cm.getFutureMeeting(id);
 		
 		cm.addMeetingNotes(id, notes);
+		
 	}
 	
 	/*
@@ -363,5 +356,57 @@ public class ContactManagerTest {
 		
 		
 		cm.getPastMeeting(id);
+	}
+	
+	/*
+	 * tests the meeting meetSort() method
+	 */
+	@Test
+	public void meetSortTest() throws EmptyContactException {
+		
+		Calendar pastest = new GregorianCalendar();
+		pastest.add(Calendar.DATE, -2);
+		
+		Calendar past = new GregorianCalendar();
+		past.add(Calendar.DATE, -1);
+		
+		Calendar future = new GregorianCalendar();
+		future.add(Calendar.DATE, +1);
+		
+		
+		Calendar futurest = new GregorianCalendar();
+		futurest.add(Calendar.DATE, +2);
+		
+		cm.addNewContact("Jim", "notes");
+		//cm.addNewContact("Jim", "Some notes");		
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		Contact contactjim = contacts.toArray(new Contact[0])[0];
+		
+		//initialise meetings in the cm
+		cm.addNewPastMeeting(contacts, pastest, "pastest");
+		cm.addNewPastMeeting(contacts, past, "past");
+		cm.addNewPastMeeting(contacts, future, "future");
+		cm.addNewPastMeeting(contacts, futurest, "futurest");
+		
+		//create a sorted PastMeeting list
+		List<Meeting> meetingsOrdered = new ArrayList<Meeting>();
+		PastMeeting meet1 = new PastMeetingImpl(contacts, pastest, 1, "pastest");
+		PastMeeting meet2 = new PastMeetingImpl(contacts, past, 2, "past");
+		PastMeeting meet3 = new PastMeetingImpl(contacts, future, 3, "future");
+		PastMeeting meet4 = new PastMeetingImpl(contacts, futurest, 4, "futurest");
+		
+
+		meetingsOrdered.add(meet1);
+		meetingsOrdered.add(meet2);
+		meetingsOrdered.add(meet3);
+		meetingsOrdered.add(meet4);
+		
+		Meeting a = cm.getPastMeetingList(contactjim).toArray(new Meeting[0])[0];
+		Meeting b = meetingsOrdered.toArray(new Meeting[0])[0];
+		
+		//TEST PASSES BUT NEEDS TO FAIL! CHOOSE ORDER OF ADDING TO CM
+		assertEquals(a.getId(), b.getId());
+
 	}
 }

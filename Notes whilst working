@@ -1,15 +1,6 @@
-getPastMeetingList test needs to be fixed.
-
-finish the getPastMeetingList method
-
 use this method and test to implement getFutureMeetingList
 
-within the tests I am most likely suffering from a race within the JVM. One suggested solution to this would be to set up the ID generator separately within each test. Or, set its individual value to 0 at the beginning and the end of each test. (beginning only would probably be fine)
-
 use find bugs. 
-
-
-
 
 
 create an interface for the idGenerator, 
@@ -19,3 +10,7 @@ create my custom idGenerator for use in my testing package.
 
 this has to be passed into the contact manager when it is instantiated, which during my tests, i use the special one.
 THIS IS DEPENDANCY INJECTION. The class i care about is the class I’m testing.
+
+
+clean up all the TODOs
+

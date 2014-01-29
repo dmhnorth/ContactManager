@@ -85,6 +85,15 @@ public class ContactManagerImpl implements ContactManager {
 		return (Meeting) meetingMap.get(id);
 	}
 	
+	private List<Meeting> meetSort() {
+		
+		// TODO create a meeting sorting algorithm
+		return null;
+		
+	}
+	
+	
+	
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
 		//TODO		
@@ -242,5 +251,5 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }
