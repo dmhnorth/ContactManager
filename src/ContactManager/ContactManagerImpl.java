@@ -106,13 +106,13 @@ public class ContactManagerImpl implements ContactManager {
 		
 		for (Meeting m: meetingMap.values()) {
 			if (m.getDate().before(now)) {
-				pastMeetings.add((PastMeeting) m);
+				pastMeetings.add((PastMeeting) m);	//creates a list of meetings before now
 			}
 			
 		for (Meeting m2 : pastMeetings)
 			for (Contact c : m2.getContacts()){
 		        if (c.equals(contact)) {  
-				result.add((PastMeeting) m2);
+				result.add((PastMeeting) m2);	//if the contact is a contact within these new meetings, add to the result
 		        }
 			}	
 		}

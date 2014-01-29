@@ -27,10 +27,12 @@ import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
+import ContactManager.FutureMeetingImpl;
 import ContactManager.IdGenerator;
 import ContactManager.Meeting;
 import ContactManager.MeetingImpl;
 import ContactManager.PastMeeting;
+import ContactManager.PastMeetingImpl;
 
 /**
  * @author Dave
@@ -175,26 +177,29 @@ public class ContactManagerTest {
 	 * 
 	*/
 	@Test
-	public void getPastMeetingList() { // TODO fix this
-		Calendar date3 = new GregorianCalendar();
-		date3.add(Calendar.DATE, -1);
+	public void getPastMeetingList() throws EmptyContactException { // TODO fix this
+		Calendar past = new GregorianCalendar();
+		past.add(Calendar.DATE, -1);
+		
+		Calendar future = new GregorianCalendar();
+		future.add(Calendar.DATE, +1);
 		
 		cm.addNewContact("Jim", "notes");
-		cm.addNewContact("Jim", "Some notes");
-		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
+				
+		Set<Contact> testList = new HashSet<Contact>();
+		testList.add(contactjim);	
 		
-		List<Contact> testList = new ArrayList<Contact>();
-		testList.addAll(cm.getContacts("Jim"));
-		testList.addAll(cm.getContacts("Jim"));
+		PastMeeting pm = new PastMeetingImpl(testList, past, 0, notes);
+		cm.addNewPastMeeting(testList, past, notes);
 		
+		cm.addFutureMeeting(testList, future);
 		
-		cm.addNewPastMeeting(contacts, date3, notes);
+		List<PastMeeting> returnedPmList = cm.getPastMeetingList(contactjim);
+		Set<Contact> actual = returnedPmList.get(0).getContacts();
 		
-		assertEquals(cm.getPastMeetingList(contactjim), testList);
-		
-		
+		assertEquals(actual, testList);	
 	}
 	
 	
