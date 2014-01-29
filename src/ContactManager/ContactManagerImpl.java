@@ -97,12 +97,14 @@ public class ContactManagerImpl implements ContactManager {
 		
 		Meeting pointer = result.get(0);
 		
+		
 		for (Meeting m : meeting) {
 			if (m.getDate().after(pointer.getDate())) {
 				result.add(m);
 			} else {
-				result.add(meeting.size(), m);
+				result.add(0, m);
 			}
+			
 		}
 		return result;
 		
@@ -142,7 +144,7 @@ public class ContactManagerImpl implements ContactManager {
 		        }
 			}	
 		}
-		meetSort(result);	// add casting
+		meetSort((List<Meeting>) (List<?>) result);	// add casting
 		return result;
 	}
 
