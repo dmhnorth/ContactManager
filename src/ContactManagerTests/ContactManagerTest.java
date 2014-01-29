@@ -29,6 +29,7 @@ import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
 import ContactManager.FutureMeetingImpl;
 import ContactManager.IdGenerator;
+import ContactManager.IdGeneratorImpl;
 import ContactManager.Meeting;
 import ContactManager.MeetingImpl;
 import ContactManager.PastMeeting;
@@ -42,7 +43,7 @@ public class ContactManagerTest {
 
 	String name = "David North";
 	String notes = "Some notes";
-	Calendar date;
+	Calendar date;	//date should be checked against the day, not the second!
 	ContactManager cm;
 	
 	@Rule
@@ -54,7 +55,9 @@ public class ContactManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		cm = new ContactManagerImpl();	
+		IdGenerator idgen = new MockIdGeneratorImpl();
+		
+		cm = new ContactManagerImpl(idgen);	
 		date = Calendar.getInstance();
 	}
 
@@ -119,9 +122,13 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void RACEERRORgetContactsViaId() {
+		
+		
+		
+		
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
-		
+		//this is not working because of the ids set
 		Contact[] sameNameSet = cm.getContacts(0, 1).toArray(new Contact[1]);
 		assertTrue(sameNameSet[0].getName() == "Jim");	
 		assertTrue(sameNameSet[1].getName() == "Jim");	
@@ -229,8 +236,11 @@ public class ContactManagerTest {
 	@Test
 	public void addNewPastMeetingIllegalArgumentException() {
 		thrown.expect(IllegalArgumentException.class);
-		cm.addNewContact("jim", notes);
-		Set<Contact> contacts = cm.getContacts("jim");
+		
+		Set<Contact> contacts = new HashSet<Contact>();
+		Contact jonny = new ContactImpl("jonny", 0);
+		contacts.add(jonny);
+		
 		cm.addNewPastMeeting(contacts, date, notes);
 		
 	}

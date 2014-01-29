@@ -1,20 +1,7 @@
-/**
- * 
- */
 package ContactManager;
 
-/**
- * @author Dave
- *
- */
-public class IdGenerator {
-	
-	private static int counter = -1;
+public interface IdGenerator {
 
-	
-	public int getNewId(){
-		counter++;
-		return counter;
-	}
-	
+	public abstract int getNewId();
+
 }

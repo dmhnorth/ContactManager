@@ -26,11 +26,11 @@ public class ContactManagerImpl implements ContactManager {
 	
 	
 	
-	public ContactManagerImpl() {
+	public ContactManagerImpl(IdGenerator idgen) {
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
 		meetingMap = new HashMap<Integer, Meeting>();
-		idGenerator = new IdGenerator();
+		idGenerator = idgen;
 		
 	}
 	
