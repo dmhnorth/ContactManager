@@ -19,8 +19,8 @@ import java.util.Set;
  */
 public class ContactManagerImpl implements ContactManager {
 	
-	Map<String, Set<Contact>> contactMap;
-	Map<Integer, Contact> idMap;
+	Map<String, Set<Contact>> contactMap;	// purely for duplicate names TODO check where this is being used
+	Map<Integer, Contact> idMap; // master contact list
 	Map<Integer, Meeting> meetingMap; //Meeting list data structure
 	IdGenerator idGenerator;
 	
@@ -125,27 +125,30 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null){
 			throw new NullPointerException();
 		}
+				
 		
-		boolean contactsExist = false;
-		for (Contact a : contacts)
-			for(Set<Contact> b : contactMap.values())
-			if (a.equals(b)){
-				contactsExist = true;
-		}
-		
-		if (!contactsExist) {
+		if (!contactExists(contacts)) {
 			throw new IllegalArgumentException();
 		}
-		
-		
+				
 		Meeting pastMeeting = null;
 		
 		try {
 			pastMeeting = new PastMeetingImpl(contacts, date, idGenerator.getNewId(), text);
+			meetingMap.put(pastMeeting.getId(), pastMeeting);
 		} catch (EmptyContactException e) {
 			e.printStackTrace();
+		}		
+	}
+
+	private boolean contactExists(Set<Contact> contacts) {
+		boolean contactsExist = false;
+		for (Contact contact : contacts) {
+				if (idMap.containsValue(contact)) {
+					contactsExist = true;
+				}	
 		}
-		meetingMap.put(pastMeeting.getId(), pastMeeting);		
+		return contactsExist;
 	}
 	
 	

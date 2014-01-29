@@ -5,6 +5,7 @@ package ContactManagerTests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -53,8 +54,6 @@ public class ContactManagerTest {
 		
 		cm = new ContactManagerImpl();	
 		date = Calendar.getInstance();
-		
-		
 	}
 
 	/**
@@ -65,8 +64,6 @@ public class ContactManagerTest {
 		
 		cm = null;
 		date = null;
-		
-		
 	}
 	
 	@Test
@@ -119,13 +116,11 @@ public class ContactManagerTest {
 	 * the above method mentioned
 	 */
 	@Test
-	public void getContactsViaId() {
+	public void RACEERRORgetContactsViaId() {
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		
 		Contact[] sameNameSet = cm.getContacts(0, 1).toArray(new Contact[1]);
-		System.out.println(sameNameSet[0]);
-		System.out.println(sameNameSet[1]);
 		assertTrue(sameNameSet[0].getName() == "Jim");	
 		assertTrue(sameNameSet[1].getName() == "Jim");	
 	}
@@ -176,8 +171,11 @@ public class ContactManagerTest {
 	}
 	
 	/*
+	 * this tests the getPastMeetingList method
+	 * 
+	*/
 	@Test
-	public void addAndGetPastMeetingList() {
+	public void getPastMeetingList() { // TODO fix this
 		Calendar date3 = new GregorianCalendar();
 		date3.add(Calendar.DATE, -1);
 		
@@ -185,26 +183,32 @@ public class ContactManagerTest {
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
+		Contact contactjim = contacts.toArray(new Contact[0])[0];
+		
+		List<Contact> testList = new ArrayList<Contact>();
+		testList.addAll(cm.getContacts("Jim"));
+		testList.addAll(cm.getContacts("Jim"));
+		
 		
 		cm.addNewPastMeeting(contacts, date3, notes);
 		
-		//cm.getPastMeetingList();
+		assertEquals(cm.getPastMeetingList(contactjim), testList);
 		
 		
 	}
-	*/
+	
 	
 	/*
 	 * tests addNewPastMeeting()
 	 */
 	@Test
-	public void addNewPastMeetingViaId() {
+	public void BROKENBYEXaddNewPastMeetingViaId() {
 		
 		Calendar date4 = new GregorianCalendar();
 		date4.add(Calendar.DATE, -1);
-		cm.addNewContact("jim", notes);
-		Set<Contact> contacts = cm.getContacts("jim");
-	 	Contact contact = contacts.toArray(new Contact[0])[0];
+		cm.addNewContact(name, notes);
+		Set<Contact> contacts = cm.getContacts(name);
+		Contact contact = contacts.toArray(new Contact[0])[0];
 				
 		cm.addNewPastMeeting(contacts, date4, notes);
 		PastMeeting ml = cm.getPastMeetingList(contact).get(0);
