@@ -87,15 +87,19 @@ public class ContactManagerImpl implements ContactManager {
 		return meetingMap.get(id);
 	}
 	
-	private class meetSort implements Comparator {
-
+	private class MeetSort implements Comparator<Meeting> {
+		
 		@Override
-		public int compare(Object arg0, Object arg1) {
-			// TODO Auto-generated method stub
-			return 0;
+		public int compare(Meeting a, Meeting b) {
+			if (a.getDate().before(b)){
+				return -1;
+			} else if (a.getDate().after(b)){
+				return +1;
+			} else {
+				return 0;
+			}
 		}
 	}
-	
 	
 	
 	@Override
