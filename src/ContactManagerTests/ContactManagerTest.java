@@ -383,7 +383,7 @@ public class ContactManagerTest {
 		
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
 		
-		//initialise meetings in the cm, out of order
+		//vb meetings in the cm, out of order
 		cm.addNewPastMeeting(contacts, past, "past");
 		cm.addNewPastMeeting(contacts, pastest, "pastest");
 		cm.addNewPastMeeting(contacts, future, "future");

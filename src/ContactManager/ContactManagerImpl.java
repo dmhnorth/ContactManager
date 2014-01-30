@@ -92,23 +92,28 @@ public class ContactManagerImpl implements ContactManager {
 		}		
 		
 		List<Meeting> result = new ArrayList<Meeting>();
+		List<Meeting> extend = new ArrayList<Meeting>();
 		
 		result.add(meeting.get(0));
 		
-		Meeting pointer = result.get(0);
 		
+		Meeting pointer = null;
 		
 		for (Meeting m : meeting) {
-			if (m.getDate().after(pointer.getDate())) {
-				result.add(m);
+			if (m == meeting.get(0)) {
+				pointer = m;
 			} else {
-				result.add(0, m);
+				if (m.getDate().after(pointer.getDate())) {
+					result.add(m);
+				} else {
+					extend.add(m);
+					extend.addAll(result);
+					result.clear();
+					result.addAll(extend);//rewrite this with deque
+				}
 			}
-			
 		}
-		return result;
-		
-		
+		return result;		
 	}
 	
 	
