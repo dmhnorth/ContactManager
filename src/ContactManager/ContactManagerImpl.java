@@ -5,12 +5,14 @@ package ContactManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 /**
@@ -85,35 +87,13 @@ public class ContactManagerImpl implements ContactManager {
 		return meetingMap.get(id);
 	}
 	
-	private List<Meeting> meetSort(List<Meeting> meeting) throws IllegalArgumentException{
-		
-		if (meeting == null) {
-			throw new IllegalArgumentException("The meeting list is empty.");
-		}		
-		
-		List<Meeting> result = new ArrayList<Meeting>();
-		List<Meeting> extend = new ArrayList<Meeting>();
-		
-		result.add(meeting.get(0));
-		
-		
-		Meeting pointer = null;
-		
-		for (Meeting m : meeting) {
-			if (m == meeting.get(0)) {
-				pointer = m;
-			} else {
-				if (m.getDate().after(pointer.getDate())) {
-					result.add(m);
-				} else {
-					extend.add(m);
-					extend.addAll(result);
-					result.clear();
-					result.addAll(extend);//rewrite this with deque
-				}
-			}
+	private class meetSort implements Comparator {
+
+		@Override
+		public int compare(Object arg0, Object arg1) {
+			// TODO Auto-generated method stub
+			return 0;
 		}
-		return result;		
 	}
 	
 	
