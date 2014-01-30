@@ -5,6 +5,7 @@ package ContactManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -87,19 +88,6 @@ public class ContactManagerImpl implements ContactManager {
 		return meetingMap.get(id);
 	}
 	
-	private class MeetSort implements Comparator<Meeting> {
-		
-		@Override
-		public int compare(Meeting a, Meeting b) {
-			if (a.getDate().before(b)){
-				return -1;
-			} else if (a.getDate().after(b)){
-				return +1;
-			} else {
-				return 0;
-			}
-		}
-	}
 	
 	
 	@Override
@@ -114,6 +102,20 @@ public class ContactManagerImpl implements ContactManager {
 		return null;
 	}
 
+	private class MeetSort implements Comparator<Meeting> {
+		
+		@Override
+		public int compare(Meeting a, Meeting b) {
+			if (a.getDate().before(b)){
+				return -1;
+			} else if (a.getDate().after(b)){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
 		
@@ -133,7 +135,7 @@ public class ContactManagerImpl implements ContactManager {
 		        }
 			}	
 		}
-		meetSort((List<Meeting>) (List<?>) result);	// add casting
+		Collections.sort(result, new MeetSort());
 		return result;
 	}
 

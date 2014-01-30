@@ -402,11 +402,12 @@ public class ContactManagerTest {
 		meetingsOrdered.add(meet3);
 		meetingsOrdered.add(meet4);
 		
-		PastMeeting a = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
-		PastMeeting b = meetingsOrdered.toArray(new PastMeeting[0])[0];
+		PastMeeting actual = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
+		PastMeeting control = meetingsOrdered.toArray(new PastMeeting[0])[0];
 		
 		//TEST PASSES BUT NEEDS TO FAIL! CHOOSE ORDER OF ADDING TO CM
-		assertEquals(a.getNotes(), b.getNotes());
+		assertEquals(control.getNotes(), actual.getNotes());
+		assertTrue(actual.getNotes().equals("pastest"));
 
 	}
 }
