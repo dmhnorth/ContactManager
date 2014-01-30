@@ -384,10 +384,10 @@ public class ContactManagerTest {
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
 		
 		//vb meetings in the cm, out of order
-		cm.addNewPastMeeting(contacts, past, "past");
-		cm.addNewPastMeeting(contacts, pastest, "pastest");
 		cm.addNewPastMeeting(contacts, future, "future");
+		cm.addNewPastMeeting(contacts, past, "past");
 		cm.addNewPastMeeting(contacts, futurest, "futurest");
+		cm.addNewPastMeeting(contacts, pastest, "pastest");
 		
 		//create a sorted PastMeeting list
 		List<Meeting> meetingsOrdered = new ArrayList<Meeting>();

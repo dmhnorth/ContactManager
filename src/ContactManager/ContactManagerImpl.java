@@ -106,13 +106,22 @@ public class ContactManagerImpl implements ContactManager {
 		
 		@Override
 		public int compare(Meeting a, Meeting b) {
-			if (a.getDate().before(b)){
+			if (a.getDate().before(b.getDate())){
 				return -1;
-			} else if (a.getDate().after(b)){
+			} else if (a.getDate().after(b.getDate())){
 				return 1;
 			} else {
 				return 0;
 			}
+			
+//			int n = a.getDate().compareTo(b.getDate());
+			
+//			if (n == 0) {
+//				return a.getId() - b.getId();	//you have to resolve if meetings are a
+//			}
+//			else {
+//				return n;
+//			}
 		}
 	}
 	
