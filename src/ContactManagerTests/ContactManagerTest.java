@@ -79,23 +79,21 @@ public class ContactManagerTest {
 		assertEquals(contact.getName(), name);
 		assertEquals(contact.getNotes(), notes);		
 	}
-	
-	
-	
+		
 	@Test
-	public void addNewContactwithNullName() throws NullPointerException {
+	public void addNewContactwithNullNameException() throws NullPointerException {
 		thrown.expect(NullPointerException.class);
 		cm.addNewContact(null, notes);
 	}
 	
 	@Test
-	public void addNewContactwithNullNotes() throws NullPointerException {
+	public void addNewContactwithNullNotesException() throws NullPointerException {
 		thrown.expect(NullPointerException.class);
 		cm.addNewContact(name, null);
 	}
 	
 	@Test
-	public void getContactswithNullName() throws NullPointerException {
+	public void getContactswithNullNameException() throws NullPointerException {
 		thrown.expect(NullPointerException.class);
 		String name = null;
 		cm.getContacts(name);
@@ -108,53 +106,43 @@ public class ContactManagerTest {
 		
 		Set<Contact> sameNameSet = cm.getContacts("Jim");
 		assertTrue(sameNameSet.size() == 2);	
-		
 	}
 	
-	/*
-	 * tests getContactsViaId() but currently doesn't run correctly when run
-	 * at the same time as the other tests due to the IllegalArgumentException within
-	 * the above method mentioned
-	 */
 	@Test
 	public void getContactsViaId() {
 				
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
-		//this is not working because of the ids set
 		Contact[] sameNameSet = cm.getContacts(0, 1).toArray(new Contact[1]);
 		assertTrue(sameNameSet[0].getName() == "Jim");	
 		assertTrue(sameNameSet[1].getName() == "Jim");	
 	}
 	
 	@Test
-	public void getContactsWithUnknownId() throws IllegalArgumentException {
+	public void getContactsWithUnknownIdException() throws IllegalArgumentException {
 		thrown.expect(IllegalArgumentException.class);
 		
 		cm.addNewContact("Jim", notes);
 		cm.addNewContact("Jim", notes);	
 		cm.getContacts(0, 1, 2);
 	}
-	
-	
+		
 	/*
 	 * tests addFutureMeeting() and getFutureMeeting()
 	 */
 	@Test
 	public void addFutureMeeting() throws EmptyContactException {
 		
-		
 		cm.addNewContact("Jim", "notes"); // Started using the cm methods so exceptions are handled externally to the test
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
-		FutureMeeting fMeeting = cm.getFutureMeeting(id); // now use it to return a FutureMeeting
+		int id = cm.addFutureMeeting(contacts, date);
+		FutureMeeting fMeeting = cm.getFutureMeeting(id);
 		
 		assertEquals(id, fMeeting.getId());
 		assertEquals(contacts, fMeeting.getContacts());
-		
 	}
 	
 	@Test
@@ -173,11 +161,11 @@ public class ContactManagerTest {
 	}
 	
 	/*
-	 * this tests the getPastMeetingList method
+	 * tests the getPastMeetingList() method
 	 * 
 	*/
 	@Test
-	public void getPastMeetingList() throws EmptyContactException { // TODO fix this
+	public void getPastMeetingList() throws EmptyContactException {
 		Calendar past = new GregorianCalendar();
 		past.add(Calendar.DATE, -1);
 		
@@ -200,8 +188,7 @@ public class ContactManagerTest {
 		
 		assertEquals(actual, testList);	
 	}
-	
-	
+		
 	/*
 	 * tests addNewPastMeeting()
 	 */
@@ -218,7 +205,6 @@ public class ContactManagerTest {
 		PastMeeting ml = cm.getPastMeetingList(contact).get(0);
 		
 		assertEquals(ml.getContacts(), contacts);		
-				
 	}
 	
 	/*
@@ -234,7 +220,6 @@ public class ContactManagerTest {
 		contacts.add(jonny);
 		
 		cm.addNewPastMeeting(contacts, date, notes);
-		
 	}
 	
 	/*
@@ -247,24 +232,20 @@ public class ContactManagerTest {
 		Set<Contact> contacts = cm.getContacts("jim");
 		cm.addNewPastMeeting(contacts, null, notes);
 	}
-	
-	
-	
-	
-	
+		
 	/*
 	 * tests getMeeting() works
 	 */
 	@Test
 	public void testGetMeeting() throws EmptyContactException {
 		
-		cm.addNewContact("Jim", "notes"); // Started using the cm methods so exceptions are handled externally to the test
+		cm.addNewContact("Jim", "notes");
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
-		Meeting meeting = cm.getMeeting(id); // now use it to return a FutureMeeting
+		int id = cm.addFutureMeeting(contacts, date);
+		Meeting meeting = cm.getMeeting(id);
 		
 		assertEquals(id, meeting.getId());
 		assertEquals(contacts, meeting.getContacts());		
@@ -281,42 +262,29 @@ public class ContactManagerTest {
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
 		date.set(2040, 1, 1);
-		int id = cm.addFutureMeeting(contacts, date); //This statement creates an int! assign id to a variable
+		int id = cm.addFutureMeeting(contacts, date);
 		FutureMeeting fm = cm.getFutureMeeting(id);
-		
-		
-		
+				
 		cm.addMeetingNotes(id, "Add some notes");
 		Meeting pm = cm.getMeeting(id);
 		
 		assertEquals(fm.getContacts(), pm.getContacts());
 		assertEquals(fm.getDate(), pm.getDate());
 		assertEquals(fm.getId(), pm.getId());
-		
 	}
 
-	/*
-	 * tests addMeetingNotes() IllegalArgumentException
-	 */
 	@Test
 	public void addMeetingNotesIllegalArgumentException(){
 		thrown.expect(IllegalArgumentException.class);
 		cm.addMeetingNotes(0, notes);
 	}
 	
-	/*
-	 * tests addMeetingNotes() NullPointerException
-	 */
 	@Test
 	public void addMeetingNotesNullPointerException(){
 		thrown.expect(NullPointerException.class);
 		cm.addMeetingNotes(0, null);
 	}
-	
-	
-	/*
-	 * tests addMeetingNotes() IllegalStateException
-	 */
+		
 	@Test
 	public void addMeetingNotesIllegalStateException(){
 		thrown.expect(IllegalStateException.class);
@@ -331,8 +299,6 @@ public class ContactManagerTest {
 		
 		
 		int id = cm.addFutureMeeting(contacts, date);
-		FutureMeeting fm = cm.getFutureMeeting(id);
-		
 		cm.addMeetingNotes(id, notes);
 		
 	}
@@ -353,7 +319,6 @@ public class ContactManagerTest {
 		future.set(3000, 1, 1);
 		
 		int id = cm.addFutureMeeting(contacts, future);
-		
 		
 		cm.getPastMeeting(id);
 	}
@@ -378,7 +343,6 @@ public class ContactManagerTest {
 		futurest.add(Calendar.DATE, +2);
 		
 		cm.addNewContact("Jim", "notes");
-		//cm.addNewContact("Jim", "Some notes");		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
@@ -395,8 +359,7 @@ public class ContactManagerTest {
 		PastMeeting meet2 = new PastMeetingImpl(contacts, past, 2, "past");
 		PastMeeting meet3 = new PastMeetingImpl(contacts, future, 3, "future");
 		PastMeeting meet4 = new PastMeetingImpl(contacts, futurest, 4, "futurest");
-		
-
+	
 		meetingsOrdered.add(meet1);
 		meetingsOrdered.add(meet2);
 		meetingsOrdered.add(meet3);
@@ -404,8 +367,6 @@ public class ContactManagerTest {
 		
 		PastMeeting actual = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
 		PastMeeting control = meetingsOrdered.toArray(new PastMeeting[0])[0];
-		
-		
 		
 		assertTrue(cm.getPastMeetingList(contactjim).size() == 2);
 		assertEquals(control.getNotes(), actual.getNotes());
@@ -419,8 +380,6 @@ public class ContactManagerTest {
 		
 		Contact bob = new ContactImpl("Bob", 0);
 		cm.getPastMeetingList(bob);
-		
-		
 	}
 	
 	@Test
@@ -452,8 +411,6 @@ public class ContactManagerTest {
 		
 		Contact bob = new ContactImpl("Bob", 0);
 		cm.getFutureMeetingList(bob);
-		
-		
 	}
 		
 	@Test
@@ -471,18 +428,11 @@ public class ContactManagerTest {
 		cm.addNewContact("Jim", "notes");
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		//result should return ids 2 and 4
 		cm.addNewPastMeeting(contacts, past, "some notes");
 		cm.addFutureMeeting(contacts, future);
 		cm.addFutureMeeting(contacts, futurest);
-		cm.addFutureMeeting(contacts, future);
-		
-//		for (Meeting m: cm.getFutureMeetingList(future)){
-//			System.out.println("id the date : " + m.getId() + " " + m.getDate().toString());
-//		}
+		cm.addFutureMeeting(contacts, future);		
 		
 		assertTrue(cm.getFutureMeetingList(future).size() == 2);
-	}
-	
-	
+	}	
 }
