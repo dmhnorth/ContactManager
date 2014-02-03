@@ -463,10 +463,10 @@ public class ContactManagerTest {
 		past.add(Calendar.DATE, -1);
 		
 		Calendar future = new GregorianCalendar();
-		future.add(Calendar.DATE, +1);
+		future.add(Calendar.DATE, +10);
 				
 		Calendar futurest = new GregorianCalendar();
-		futurest.add(Calendar.DATE, +2);
+		futurest.add(Calendar.DATE, +20);
 		
 		cm.addNewContact("Jim", "notes");
 		Set<Contact> contacts = cm.getContacts("Jim");
@@ -477,9 +477,11 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, futurest);
 		cm.addFutureMeeting(contacts, future);
 		
+		for (Meeting m: cm.getFutureMeetingList(future)){
+			System.out.println("id the date : " + m.getId() + " " + m.getDate().toString());
+		}
 		
-		List<Meeting> actual = cm.getFutureMeetingList(future);
-		
+		assertTrue(cm.getFutureMeetingList(future).size() == 2);
 	}
 		
 	

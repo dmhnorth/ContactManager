@@ -129,8 +129,34 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		//TODO
-		return null;
+		
+		List<Meeting> result = new ArrayList<Meeting>();
+		
+		//deletes time of meeting for sake of comparison
+		date.set(Calendar.HOUR, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);		
+		
+		// TODO possibly this is destroying times within Calendars.
+		// selects all the meetings in the container after now
+		for (Meeting m : meetingMap.values()) {
+			
+			Calendar c = new GregorianCalendar();
+			c = m.getDate();
+			
+			//deletes time of meeting for sake of comparison
+			c.set(Calendar.HOUR, 0);
+	        c.set(Calendar.MINUTE, 0);
+	        c.set(Calendar.SECOND, 0);
+	        c.set(Calendar.MILLISECOND, 0);
+					
+			if (m.getDate() == date) {
+				result.add(m);
+			}
+		}
+		Collections.sort(result, new MeetSort());
+		return result;
 	}
 
 	private class MeetSort implements Comparator<Meeting> {
