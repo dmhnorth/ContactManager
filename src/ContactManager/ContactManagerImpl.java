@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 
 /**
@@ -22,7 +21,7 @@ import java.util.TreeSet;
  */
 public class ContactManagerImpl implements ContactManager {
 	
-	Map<String, Set<Contact>> contactMap;	// purely for duplicate names TODO check where this is being used
+	Map<String, Set<Contact>> contactMap;
 	Map<Integer, Contact> idMap; // master contact list
 	Map<Integer, Meeting> meetingMap; //Meeting list data structure
 	IdGenerator idGenerator;
@@ -42,11 +41,11 @@ public class ContactManagerImpl implements ContactManager {
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException {
 		
 		Calendar now = Calendar.getInstance();
-		
+
 		if (date.before(now)) { 
 			throw new IllegalStateException();
 		}
-		
+
 		FutureMeeting meeting = null;
 		try {
 			meeting =  new FutureMeetingImpl(contacts, date, idGenerator.getNewId());
@@ -60,15 +59,13 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public PastMeeting getPastMeeting(int id) throws IllegalArgumentException {		
-		
+
 		Calendar now = Calendar.getInstance();
 		Meeting pm = meetingMap.get(id);
-		
+
 		if (pm.getDate().after(now)) {
 			throw new IllegalArgumentException();
 		}
-				
-		
 		return (PastMeeting) pm;
 	}
 
@@ -87,9 +84,7 @@ public class ContactManagerImpl implements ContactManager {
 	public Meeting getMeeting(int id) {
 		return meetingMap.get(id);
 	}
-	
-	
-	
+		
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException {
 		
@@ -110,21 +105,17 @@ public class ContactManagerImpl implements ContactManager {
 			if (m.getDate().after(now)) {
 				futureMeetings.add((FutureMeeting) m);
 			}
-			
-			}
-			
-			//if the contact is within the meeting, that meeting is added to the result
-			for (Meeting m2: futureMeetings) {
-				for (Contact c : m2.getContacts()) {
-					if (c.equals(contact)) {
-						result.add((FutureMeeting) m2);
-					}
+		}
+		//if the contact is within the meeting, that meeting is added to the result
+		for (Meeting m2: futureMeetings) {
+			for (Contact c : m2.getContacts()) {
+				if (c.equals(contact)) {
+					result.add((FutureMeeting) m2);
 				}
 			}
-			
+		}
 		Collections.sort(result, new MeetSort());
 		return result;
-			    	
 	}
 
 	private boolean sameDay(Calendar date1, Calendar date2) {
@@ -135,13 +126,12 @@ public class ContactManagerImpl implements ContactManager {
 			return false;
 		}
 	}
-	
-	
+
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		
+
 		List<Meeting> result = new ArrayList<Meeting>();
-		
+
 		for (Meeting m : meetingMap.values()) {
 			if (sameDay(m.getDate(), date)) {
 				result.add(m);
@@ -152,7 +142,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	private class MeetSort implements Comparator<Meeting> {
-		
+
 		@Override
 		public int compare(Meeting a, Meeting b) {
 			if (a.getDate().before(b.getDate())){
@@ -164,35 +154,35 @@ public class ContactManagerImpl implements ContactManager {
 			}
 		}
 	}
-	
+
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) throws IllegalArgumentException {
-		
+
 		Calendar now = new GregorianCalendar();
 		Set<PastMeeting> result = new HashSet<PastMeeting>();
 		List<PastMeeting> resultReturn = new ArrayList<PastMeeting>();
 		List<PastMeeting> pastMeetings = new ArrayList<PastMeeting>();
-		
+
 		HashSet<Contact> contacts = new HashSet<Contact>();
 		contacts.add(contact);
 		if (!contactExists(contacts)){
 			throw new IllegalArgumentException();
 		}
-		
+
 		//creates a list of meetings before now
 		now = Calendar.getInstance();
 		for (Meeting m: meetingMap.values()) {
 			if (m.getDate().before(now)) {
 				pastMeetings.add((PastMeeting) m);
 			}
-		
+
 			//if the contact is a contact within these new meetings, add it to the result set
-		for (Meeting m2 : pastMeetings)
-			for (Contact c : m2.getContacts()){
-		        if (c.equals(contact)) {  
-				result.add((PastMeeting) m2);	
-				}
-			}	
+			for (Meeting m2 : pastMeetings)
+				for (Contact c : m2.getContacts()){
+					if (c.equals(contact)) {  
+						result.add((PastMeeting) m2);	
+					}
+				}	
 		}
 		resultReturn.addAll(result);
 		Collections.sort(resultReturn, new MeetSort());
@@ -201,18 +191,16 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,	String text) throws IllegalArgumentException, NullPointerException{
-		
+
 		if (contacts == null || date == null || text == null){
 			throw new NullPointerException();
 		}
-				
-		
+
 		if (!contactExists(contacts)) {
 			throw new IllegalArgumentException();
 		}
-				
+
 		Meeting pastMeeting = null;
-		
 		try {
 			pastMeeting = new PastMeetingImpl(contacts, date, idGenerator.getNewId(), text);
 			meetingMap.put(pastMeeting.getId(), pastMeeting);
@@ -227,57 +215,54 @@ public class ContactManagerImpl implements ContactManager {
 	private boolean contactExists(Set<Contact> contacts) {
 		boolean contactsExist = false;
 		for (Contact contact : contacts) {
-				if (idMap.containsValue(contact)) {
-					contactsExist = true;
-				}	
+			if (idMap.containsValue(contact)) {
+				contactsExist = true;
+			}	
 		}
 		return contactsExist;
 	}
 	
-	
 	@Override
 	public void addMeetingNotes(int id, String text) throws IllegalArgumentException, NullPointerException, IllegalArgumentException {
-		
+
 		if (text == null) {
 			throw new NullPointerException();
 		}
-		
+
 		Calendar now = Calendar.getInstance();
 		FutureMeeting fm = (FutureMeeting) meetingMap.get(id);		
-		
-			if (fm == null) {
-				throw new IllegalArgumentException();
-			}
-			
-			if (fm.getDate().before(now)) { 
-				throw new IllegalStateException();
-			}		
-		
+
+		if (fm == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (fm.getDate().before(now)) { 
+			throw new IllegalStateException();
+		}		
+
 		PastMeeting pm = null;
-		
+
 		try {
 			pm = new PastMeetingImpl(fm.getContacts(), fm.getDate(), id, text);
 		} catch (EmptyContactException e) {			
 			e.printStackTrace();
 		}
-		
+
 		meetingMap.put(id, pm);
 	}
-		
-	
 
 	@Override
 	public void addNewContact(String name, String notes) throws NullPointerException {
-		
+
 		if (name == null || notes == null) { 
 			throw new NullPointerException();
 		}
-		
-		Contact contact = new ContactImpl(name, idGenerator.getNewId()); // TODO
+
+		Contact contact = new ContactImpl(name, idGenerator.getNewId());
 		contact.addNotes(notes);
-		
-		idMap.put(contact.getId(), contact);	//mirrors the contactMap
-		
+
+		idMap.put(contact.getId(), contact);
+
 		if (contactMap.get(name) == null) {
 			Set<Contact> contacts = new HashSet<Contact>();
 			contacts.add(contact);
@@ -286,7 +271,6 @@ public class ContactManagerImpl implements ContactManager {
 			Set<Contact> contacts = contactMap.get(name);// create variable of the current Contact Set that exists within the map in order to point at it on the next line
 			contacts.add(contact);
 		}
-				
 	}
 
 	/*
@@ -294,7 +278,7 @@ public class ContactManagerImpl implements ContactManager {
 	 */
 	@Override
 	public Set<Contact> getContacts(int... ids) throws IllegalArgumentException {
-		
+
 		Set<Contact> contacts = new HashSet<Contact>();
 		for (int id : ids) {
 			if (idMap.get(id) == null){
@@ -302,28 +286,24 @@ public class ContactManagerImpl implements ContactManager {
 			}
 			contacts.add(idMap.get(id));
 		}
-		
+
 		return contacts;
 	}
-
 	
 	/*
 	 * Using a contactMap we have now converted the values into Sets so it works as a matrix
 	 */
 	@Override
 	public Set<Contact> getContacts(String name) throws NullPointerException {
-		
+
 		if (name == null) { 
 			throw new NullPointerException(); 
 		}
-		
 		return contactMap.get(name);
 	}
 
 	@Override
 	public void flush() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
-	
 }
