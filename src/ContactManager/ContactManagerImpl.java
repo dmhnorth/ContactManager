@@ -117,21 +117,29 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	@Override
-	public List<PastMeeting> getPastMeetingList(Contact contact) {
+	public List<PastMeeting> getPastMeetingList(Contact contact) throws IllegalArgumentException {
 		
 		Calendar now = new GregorianCalendar();		
 		List<PastMeeting> result = new ArrayList<PastMeeting>();
 		List<PastMeeting> pastMeetings = new ArrayList<PastMeeting>();
 		
+		HashSet<Contact> contacts = new HashSet<Contact>();
+		contacts.add(contact);
+		if (!contactExists(contacts)){
+			throw new IllegalArgumentException();
+		}
+		
+		//creates a list of meetings before now
 		for (Meeting m: meetingMap.values()) {
 			if (m.getDate().before(now)) {
-				pastMeetings.add((PastMeeting) m);	//creates a list of meetings before now
+				pastMeetings.add((PastMeeting) m);	
 			}
-			
+		
+			//if the contact is a contact within these new meetings, add to the result
 		for (Meeting m2 : pastMeetings)
 			for (Contact c : m2.getContacts()){
 		        if (c.equals(contact)) {  
-				result.add((PastMeeting) m2);	//if the contact is a contact within these new meetings, add to the result
+				result.add((PastMeeting) m2);	
 		        }
 			}	
 		}
@@ -161,6 +169,9 @@ public class ContactManagerImpl implements ContactManager {
 		}		
 	}
 
+	/*
+	 * This Method establishs if a contact exists within the contacts container
+	 */
 	private boolean contactExists(Set<Contact> contacts) {
 		boolean contactsExist = false;
 		for (Contact contact : contacts) {
