@@ -383,7 +383,7 @@ public class ContactManagerTest {
 		
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
 		
-		//vb meetings in the cm, out of order
+		//vb meetings in the cm, out of order. Currently NewPastMeetings can have a future date TODO
 		cm.addNewPastMeeting(contacts, future, "future");
 		cm.addNewPastMeeting(contacts, past, "past");
 		cm.addNewPastMeeting(contacts, futurest, "futurest");
@@ -404,7 +404,10 @@ public class ContactManagerTest {
 		
 		PastMeeting actual = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
 		PastMeeting control = meetingsOrdered.toArray(new PastMeeting[0])[0];
-				
+		
+		
+		
+		assertTrue(cm.getPastMeetingList(contactjim).size() == 2);
 		assertEquals(control.getNotes(), actual.getNotes());
 		assertTrue(actual.getNotes().equals("pastest"));
 
@@ -440,7 +443,6 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, future);
 		
 		Contact contactjim = contacts.toArray(new Contact[0])[0];
-		
 		assertTrue(cm.getFutureMeetingList(contactjim).size() == 2);
 		
 		

@@ -104,6 +104,8 @@ public class ContactManagerImpl implements ContactManager {
 				futureMeetings.add((FutureMeeting) m);
 			}
 			
+			}
+			
 			//if the contact is within the meeting, that meeting is added to the result
 			for (Meeting m2: futureMeetings) {
 				for (Contact c : m2.getContacts()) {
@@ -112,7 +114,7 @@ public class ContactManagerImpl implements ContactManager {
 					}
 				}
 			}
-		}
+			
 		Collections.sort(result, new MeetSort());
 		return result;
 			    	
@@ -141,8 +143,9 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) throws IllegalArgumentException {
 		
-		Calendar now = new GregorianCalendar();		
-		List<PastMeeting> result = new ArrayList<PastMeeting>();
+		Calendar now = new GregorianCalendar();
+		Set<PastMeeting> result = new HashSet<PastMeeting>();
+		List<PastMeeting> resultReturn = new ArrayList<PastMeeting>();
 		List<PastMeeting> pastMeetings = new ArrayList<PastMeeting>();
 		
 		HashSet<Contact> contacts = new HashSet<Contact>();
@@ -152,21 +155,23 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		
 		//creates a list of meetings before now
+		now = Calendar.getInstance();
 		for (Meeting m: meetingMap.values()) {
 			if (m.getDate().before(now)) {
-				pastMeetings.add((PastMeeting) m);	
+				pastMeetings.add((PastMeeting) m);
 			}
 		
-			//if the contact is a contact within these new meetings, add to the result
+			//if the contact is a contact within these new meetings, add it to the result set
 		for (Meeting m2 : pastMeetings)
 			for (Contact c : m2.getContacts()){
 		        if (c.equals(contact)) {  
 				result.add((PastMeeting) m2);	
-		        }
+				}
 			}	
 		}
-		Collections.sort(result, new MeetSort());
-		return result;
+		resultReturn.addAll(result);
+		Collections.sort(resultReturn, new MeetSort());
+		return resultReturn;
 	}
 
 	@Override
