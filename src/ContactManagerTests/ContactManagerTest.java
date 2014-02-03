@@ -477,16 +477,12 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, futurest);
 		cm.addFutureMeeting(contacts, future);
 		
-		for (Meeting m: cm.getFutureMeetingList(future)){
-			System.out.println("id the date : " + m.getId() + " " + m.getDate().toString());
-		}
+//		for (Meeting m: cm.getFutureMeetingList(future)){
+//			System.out.println("id the date : " + m.getId() + " " + m.getDate().toString());
+//		}
 		
 		assertTrue(cm.getFutureMeetingList(future).size() == 2);
 	}
-		
-	
-	
-	
 	
 	
 }

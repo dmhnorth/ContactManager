@@ -127,31 +127,23 @@ public class ContactManagerImpl implements ContactManager {
 			    	
 	}
 
+	private boolean sameDay(Calendar date1, Calendar date2) {
+				
+		if (date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR) && date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH) && date1.get(Calendar.DATE) == date2.get(Calendar.DATE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 		
 		List<Meeting> result = new ArrayList<Meeting>();
 		
-		//deletes time of meeting for sake of comparison
-		date.set(Calendar.HOUR, 0);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);		
-		
-		// TODO possibly this is destroying times within Calendars.
-		// selects all the meetings in the container after now
 		for (Meeting m : meetingMap.values()) {
-			
-			Calendar c = new GregorianCalendar();
-			c = m.getDate();
-			
-			//deletes time of meeting for sake of comparison
-			c.set(Calendar.HOUR, 0);
-	        c.set(Calendar.MINUTE, 0);
-	        c.set(Calendar.SECOND, 0);
-	        c.set(Calendar.MILLISECOND, 0);
-					
-			if (m.getDate() == date) {
+			if (sameDay(m.getDate(), date)) {
 				result.add(m);
 			}
 		}
