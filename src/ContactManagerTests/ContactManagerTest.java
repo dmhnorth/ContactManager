@@ -405,7 +405,6 @@ public class ContactManagerTest {
 		PastMeeting actual = cm.getPastMeetingList(contactjim).toArray(new PastMeeting[0])[0];
 		PastMeeting control = meetingsOrdered.toArray(new PastMeeting[0])[0];
 		
-		//TEST PASSES BUT NEEDS TO FAIL! CHOOSE ORDER OF ADDING TO CM
 		assertEquals(control.getNotes(), actual.getNotes());
 		assertTrue(actual.getNotes().equals("pastest"));
 

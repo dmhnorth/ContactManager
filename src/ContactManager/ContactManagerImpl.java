@@ -113,15 +113,6 @@ public class ContactManagerImpl implements ContactManager {
 			} else {
 				return 0;
 			}
-			
-//			int n = a.getDate().compareTo(b.getDate());
-			
-//			if (n == 0) {
-//				return a.getId() - b.getId();	//you have to resolve if meetings are a
-//			}
-//			else {
-//				return n;
-//			}
 		}
 	}
 	
