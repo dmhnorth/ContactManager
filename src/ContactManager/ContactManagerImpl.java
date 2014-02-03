@@ -91,11 +91,18 @@ public class ContactManagerImpl implements ContactManager {
 	
 	
 	@Override
-	public List<Meeting> getFutureMeetingList(Contact contact) {
+	public List<Meeting> getFutureMeetingList(Contact contact) throws IllegalArgumentException {
 		
 		Calendar now = new GregorianCalendar();
 		List<Meeting> result = new ArrayList<Meeting>();
 		List<FutureMeeting> futureMeetings = new ArrayList<FutureMeeting>();
+		
+		//checks contacts exist
+		HashSet<Contact> contacts = new HashSet<Contact>();
+		contacts.add(contact);
+		if (!contactExists(contacts)){
+			throw new IllegalArgumentException();
+		}
 		
 		//creates a list of all the meetings after now
 		now = Calendar.getInstance();
