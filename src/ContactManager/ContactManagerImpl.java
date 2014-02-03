@@ -92,8 +92,30 @@ public class ContactManagerImpl implements ContactManager {
 	
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
-		//TODO		
-		return null;	    	
+		
+		Calendar now = new GregorianCalendar();
+		List<Meeting> result = new ArrayList<Meeting>();
+		List<FutureMeeting> futureMeetings = new ArrayList<FutureMeeting>();
+		
+		//creates a list of all the meetings after now
+		now = Calendar.getInstance();
+		for (Meeting m: meetingMap.values()) {
+			if (m.getDate().after(now)) {
+				futureMeetings.add((FutureMeeting) m);
+			}
+			
+			//if the contact is within the meeting, that meeting is added to the result
+			for (Meeting m2: futureMeetings) {
+				for (Contact c : m2.getContacts()) {
+					if (c.equals(contact)) {
+						result.add((FutureMeeting) m2);
+					}
+				}
+			}
+		}
+		Collections.sort(result, new MeetSort());
+		return result;
+			    	
 	}
 
 	@Override

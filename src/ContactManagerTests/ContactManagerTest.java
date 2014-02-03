@@ -414,9 +414,39 @@ public class ContactManagerTest {
 	public void getPastMeetingListException() throws IllegalArgumentException {
 		thrown.expect(IllegalArgumentException.class);
 		
-		Contact boblet = new ContactImpl("Bob", 0);
-		cm.getPastMeetingList(boblet);
+		Contact bob = new ContactImpl("Bob", 0);
+		cm.getPastMeetingList(bob);
 		
 		
 	}
+	
+	@Test
+	public void getFutureMeetingList() {
+		
+		Calendar past = new GregorianCalendar();
+		past.add(Calendar.DATE, -1);
+		
+		Calendar future = new GregorianCalendar();
+		future.add(Calendar.DATE, +1);
+				
+		Calendar futurest = new GregorianCalendar();
+		futurest.add(Calendar.DATE, +2);
+		
+		cm.addNewContact("Jim", "notes");
+		Set<Contact> contacts = cm.getContacts("Jim");
+		
+		cm.addNewPastMeeting(contacts, past, "some notes");
+		cm.addFutureMeeting(contacts, futurest);
+		cm.addFutureMeeting(contacts, future);
+		
+		Contact contactjim = contacts.toArray(new Contact[0])[0];
+		
+		assertTrue(cm.getFutureMeetingList(contactjim).size() == 2);
+		
+		
+	}
+	
+	
+	
+	
 }
