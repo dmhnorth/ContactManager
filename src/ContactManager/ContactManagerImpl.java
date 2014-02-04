@@ -49,12 +49,13 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting meeting = null;
 		try {
 			meeting =  new FutureMeetingImpl(contacts, date, idGenerator.getNewId());
+			//Add meeting to the data structure
+			meetingMap.put(meeting.getId(), meeting);	
+			return meeting.getId();
 		} catch (EmptyContactException e) {
 			e.printStackTrace();
-		}		
-		//Add meeting to the data structure
-		meetingMap.put(meeting.getId(), meeting);		
-		return meeting.getId();
+			throw new IllegalArgumentException();
+		}					
 	}
 
 	@Override
@@ -229,7 +230,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	
 	@Override
-	public void addMeetingNotes(int id, String text) throws IllegalArgumentException, NullPointerException, IllegalArgumentException {
+	public void addMeetingNotes(int id, String text) throws IllegalArgumentException, NullPointerException, IllegalStateException {
 
 		if (text == null) {
 			throw new NullPointerException();

@@ -39,7 +39,7 @@ public class ContactManagerTest {
 
 	String name = "David North";
 	String notes = "Some notes";
-	Calendar date;	//date should be checked against the day, not the second!
+	Calendar date;
 	ContactManager cm;
 	
 	@Rule
@@ -284,7 +284,6 @@ public class ContactManagerTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void addMeetingNotesNullPointerException(){
-		thrown.expect(NullPointerException.class);
 		cm.addMeetingNotes(0, null);
 		
 	}
