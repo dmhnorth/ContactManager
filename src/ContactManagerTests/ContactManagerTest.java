@@ -133,12 +133,15 @@ public class ContactManagerTest {
 	@Test
 	public void addFutureMeeting() throws EmptyContactException {
 		
+		Calendar future = Calendar.getInstance();
+		future.set(2015, 1, 1);
+		
 		cm.addNewContact("Jim", "notes"); // Started using the cm methods so exceptions are handled externally to the test
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		int id = cm.addFutureMeeting(contacts, date);
+		int id = cm.addFutureMeeting(contacts, future);
 		FutureMeeting fMeeting = cm.getFutureMeeting(id);
 		
 		assertEquals(id, fMeeting.getId());

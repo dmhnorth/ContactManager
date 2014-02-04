@@ -25,17 +25,16 @@ import ContactManager.Meeting;
  *
  */
 public class MeetingTest {
-	
+
 	Calendar birthday2014 = Calendar.getInstance();
 	private Contact contactA;
 	private Contact contactB;
 	private Set<Contact> testContactList;
 	Meeting meeting;
-	
-	
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -72,7 +71,7 @@ public class MeetingTest {
 	public void testGetContacts() {
 		assertEquals("Contacts not found", testContactList, meeting.getContacts());
 	}
-	
+
 	/**
 	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
 	 */
@@ -81,7 +80,7 @@ public class MeetingTest {
 		thrown.expect(EmptyContactException.class);
 		new MeetingImpl(null, birthday2014, 0);
 	}
-	
+
 	/**
 	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
 	 */
@@ -90,6 +89,6 @@ public class MeetingTest {
 		thrown.expect(EmptyContactException.class);
 		new MeetingImpl(new HashSet<Contact>(), birthday2014, 0);
 	}
-	
+
 
 }

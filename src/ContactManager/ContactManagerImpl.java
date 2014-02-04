@@ -118,6 +118,9 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
+	/*
+	 * Used for checking whether two meetings happen on the same day but disregards the time of day
+	 */
 	private boolean sameDay(Calendar date1, Calendar date2) {
 				
 		if (date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR) && date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH) && date1.get(Calendar.DATE) == date2.get(Calendar.DATE)) {
@@ -141,6 +144,9 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
+	/*
+	 * Comparator for organizing a Collection of meetings into Chronological order
+	 */
 	private class MeetSort implements Comparator<Meeting> {
 
 		@Override
