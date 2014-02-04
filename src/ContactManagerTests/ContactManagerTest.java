@@ -92,9 +92,9 @@ public class ContactManagerTest {
 		cm.addNewContact(name, null);
 	}
 	
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void getContactswithNullNameException() throws NullPointerException {
-		thrown.expect(NullPointerException.class);
+//		thrown.expect(NullPointerException.class);
 		String name = null;
 		cm.getContacts(name);
 	}
@@ -282,10 +282,11 @@ public class ContactManagerTest {
 		cm.addMeetingNotes(0, notes);
 	}
 	
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void addMeetingNotesNullPointerException(){
 		thrown.expect(NullPointerException.class);
 		cm.addMeetingNotes(0, null);
+		
 	}
 		
 	@Test
