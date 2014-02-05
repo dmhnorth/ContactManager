@@ -434,5 +434,20 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, future);		
 		
 		assertTrue(cm.getFutureMeetingList(future).size() == 2);
-	}	
+	}
+	
+	@Test
+	public void flushPersistanceTest() {
+		
+		Calendar future = new GregorianCalendar();
+		future.add(Calendar.DATE, +10);
+				
+		cm.addNewContact("Ian James", "Some notes about Ian.");
+		cm.addNewContact("Paul Willy", "Some notes about Paul");
+		Set<Contact> contacts = cm.getContacts(0, 1);
+		
+		cm.addFutureMeeting(contacts, future);
+		
+		cm.flush();
+	}
 }
