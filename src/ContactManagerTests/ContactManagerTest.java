@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,6 @@ import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
 import ContactManager.IdGenerator;
 import ContactManager.Meeting;
-import ContactManager.MeetingImpl;
 import ContactManager.PastMeeting;
 import ContactManager.PastMeetingImpl;
 
@@ -94,7 +92,6 @@ public class ContactManagerTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void getContactswithNullNameException() throws NullPointerException {
-//		thrown.expect(NullPointerException.class);
 		String name = null;
 		cm.getContacts(name);
 	}

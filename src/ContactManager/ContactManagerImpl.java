@@ -32,7 +32,7 @@ public class ContactManagerImpl implements ContactManager {
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
 		meetingMap = new HashMap<Integer, Meeting>();
-		idGenerator = idgen;
+		idGenerator = idgen;	//create a default idgen fallback TODO
 		
 	}
 	
@@ -53,7 +53,6 @@ public class ContactManagerImpl implements ContactManager {
 			meetingMap.put(meeting.getId(), meeting);	
 			return meeting.getId();
 		} catch (EmptyContactException e) {
-			e.printStackTrace();
 			throw new IllegalArgumentException();
 		}					
 	}
