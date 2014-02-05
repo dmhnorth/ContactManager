@@ -55,31 +55,9 @@ public class DataManagerTests {
 		dm = null;
 	}
 	
-	/*
-	 * Tests the using the contact manager
-	 *
-	@Test
-	public void flushPersistanceTestSave() {
-		
-		Calendar future = new GregorianCalendar();
-		future.add(Calendar.DATE, +10);
-				
-		cm.addNewContact("Potato James", "Some notes about Ian.");
-		cm.addNewContact("Paul Willy", "Some notes about Paul");
-		Set<Contact> contacts = cm.getContacts(0, 1);
-		
-		cm.addFutureMeeting(contacts, future);
-		cm.addNewPastMeeting(contacts, future, "text");
-		
-		
-		cm.flush();
-		
-		
-	}
-	*/
 	
 	/*
-	 * Tests and loading something several times
+	 * Tests saving and loading an array several times
 	 */
 	@Test
 	public void flushPersistanceTestSingleLoadArray() {
@@ -108,7 +86,7 @@ public class DataManagerTests {
 	}
 	
 	/*
-	 * Tests and loading something several times
+	 * Tests saving and loading a contact list
 	 */
 	@Test
 	public void flushPersistanceTestSingleLoadContact() {
@@ -136,7 +114,7 @@ public class DataManagerTests {
 	}
 	
 	/*
-	 * Tests and loading something several times
+	 * Tests saving and loading two entirely different objects
 	 */
 	@Test
 	public void flushPersistanceTestDoubleLoad() {
@@ -156,8 +134,8 @@ public class DataManagerTests {
 		dm.close();
 		
 		
-		List<Integer> arrayReload = (List<Integer>) dm.loadData(al);
 		HashSet<Contact> contactsReload = (HashSet<Contact>) dm.loadData(contacts);
+		List<Integer> arrayReload = (List<Integer>) dm.loadData(al);
 		
 		Contact[] contactArray = contacts.toArray(new Contact[0]);
 		Contact contact1 = contactArray[0];
@@ -173,5 +151,27 @@ public class DataManagerTests {
 		
 	}
 
+	/*
+	 * Tests the using the contact manager
+	 *
+	@Test
+	public void flushPersistanceTestSave() {
+		
+		Calendar future = new GregorianCalendar();
+		future.add(Calendar.DATE, +10);
+				
+		cm.addNewContact("Potato James", "Some notes about Ian.");
+		cm.addNewContact("Paul Willy", "Some notes about Paul");
+		Set<Contact> contacts = cm.getContacts(0, 1);
+		
+		cm.addFutureMeeting(contacts, future);
+		cm.addNewPastMeeting(contacts, future, "text");
+		
+		
+		cm.flush();
+		
+		
+	}
+	 */
 
 }

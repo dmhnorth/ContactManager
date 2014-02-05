@@ -1,14 +1,17 @@
-finsih meet sort
+get PastMeetingList actually returns all the meetings at the moment
+this is the same for future, so use the future meeting list to sort this out
 
-IMPLEMENT MEETSORT. FAULT COULD BE IN GETSIZE on final result add.
+meetSort could clean up a list and remove duplicates
 
-use this method and test to implement getFutureMeetingList
+
+
 
 use find bugs. 
 
 
-create an interface for the idGenerator, 
 
+
+IDGEN
 current idGenerator goes into the production code along with the interface, including the static part
 create my custom idGenerator for use in my testing package.
 
@@ -17,4 +20,8 @@ THIS IS DEPENDANCY INJECTION. The class i care about is the class I’m testing.
 
 
 clean up all the TODOs
+Refactoring (first check all the the tests are working appropriately!!)
+- check the way dates are compared, using compareto could be a more effective, less messy way of doing this. 
+- create instances of each list or hash set on the fly throughout methods rather than at the top. may end up being cleaner throughout
+-  
 
