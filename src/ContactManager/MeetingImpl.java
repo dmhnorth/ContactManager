@@ -3,6 +3,7 @@
  */
 package ContactManager;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -34,6 +35,9 @@ public class MeetingImpl implements Meeting {
 		this.id = iD;
 	}
 	
+	public MeetingImpl() {
+		//for xml
+	}
 	
 	@Override
 	public int getId() {

@@ -22,6 +22,7 @@ import ContactManager.Contact;
 import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
+import ContactManager.DataManager;
 import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
 import ContactManager.IdGenerator;
@@ -39,6 +40,7 @@ public class ContactManagerTest {
 	String notes = "Some notes";
 	Calendar date;
 	ContactManager cm;
+	DataManager dm;
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -51,7 +53,8 @@ public class ContactManagerTest {
 		
 		IdGenerator idgen = new MockIdGeneratorImpl();
 		
-		cm = new ContactManagerImpl(idgen);	
+		dm = new DataManager();
+		cm = new ContactManagerImpl(idgen, dm);	
 		date = Calendar.getInstance();
 	}
 
@@ -436,18 +439,4 @@ public class ContactManagerTest {
 		assertTrue(cm.getFutureMeetingList(future).size() == 2);
 	}
 	
-	@Test
-	public void flushPersistanceTest() {
-		
-		Calendar future = new GregorianCalendar();
-		future.add(Calendar.DATE, +10);
-				
-		cm.addNewContact("Ian James", "Some notes about Ian.");
-		cm.addNewContact("Paul Willy", "Some notes about Paul");
-		Set<Contact> contacts = cm.getContacts(0, 1);
-		
-		cm.addFutureMeeting(contacts, future);
-		
-		cm.flush();
-	}
 }

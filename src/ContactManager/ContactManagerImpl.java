@@ -3,10 +3,6 @@
  */
 package ContactManager;
 
-import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -29,16 +25,20 @@ public class ContactManagerImpl implements ContactManager {
 	private Map<Integer, Contact> idMap; // master contact list
 	private Map<Integer, Meeting> meetingMap; //Meeting list data structure
 	private IdGenerator idGenerator;
+	private DataManager dataManager;
 	
 	
 	
-	public ContactManagerImpl(IdGenerator idgen) {
+	
+	public ContactManagerImpl(IdGenerator idgen, DataManager dm) {
 		//read from file if it exist, if it doesn't create a new one
 		contactMap = new HashMap<String, Set<Contact>>();
 		idMap = new HashMap<Integer, Contact>();
 		meetingMap = new HashMap<Integer, Meeting>();
 		idGenerator = idgen;
+		dataManager = dm;
 		
+		// TODO put in shutdown hook that calls flush
 	}
 	
 	
@@ -315,21 +315,8 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void flush() {
-		final String FILENAME = "cm_data";
-		
-		XMLEncoder encode = null;
-		try {
-			encode = new XMLEncoder(
-					new BufferedOutputStream(
-							new FileOutputStream(FILENAME)));
-		} catch (FileNotFoundException e) {
-			System.err.println("encoding contact manager... " + e);
-		}
-		
-		encode.writeObject(contactMap);
-		encode.writeObject(idMap);
-		encode.writeObject(meetingMap);
-		encode.writeObject(idGenerator);
-		encode.close();
+				
+		dataManager.saveData(contactMap, idMap, meetingMap, idGenerator);
+		dataManager.close();				
 	}
 }

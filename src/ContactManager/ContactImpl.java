@@ -14,6 +14,11 @@ public class ContactImpl implements Contact {
 		this.id = iD;
 	}
 	
+	
+	public ContactImpl(){
+		//for xml
+	}
+	
 	/*
 	 * returns the Contacts Id
 	 */
