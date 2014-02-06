@@ -6,11 +6,8 @@ package ContactManagerTests;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -66,8 +63,8 @@ public class DataManagerTests {
 	@Test
 	public void flushPersistanceTestSave() {
 		
-		Contact contact1 = new ContactImpl();
-		Contact contact2 = new ContactImpl();
+		Contact contact1 = new ContactImpl(null, 0);
+		Contact contact2 = new ContactImpl(null, 0);
 		
 		//set up a date
 		Calendar future = new GregorianCalendar();

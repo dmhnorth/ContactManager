@@ -3,6 +3,7 @@
  */
 package ContactManager;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -10,10 +11,14 @@ import java.util.Set;
  * @author Dave
  *
  */
-public class MeetingImpl implements Meeting {
+public class MeetingImpl implements Meeting, Serializable {
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1922728117007903192L;
 	private int id;
 	private Calendar date;
 	Set<Contact> contacts;
@@ -34,9 +39,6 @@ public class MeetingImpl implements Meeting {
 		this.id = iD;
 	}
 	
-	public MeetingImpl() {
-		//for xml
-	}
 	
 	@Override
 	public int getId() {

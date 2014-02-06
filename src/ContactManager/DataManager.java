@@ -1,14 +1,14 @@
 package ContactManager;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
-import java.util.Scanner;
 /**
  * 
  */
@@ -20,36 +20,44 @@ import java.util.Set;
  */
 public class DataManager {
 	
-	final String FILENAME = "contacts.xml";
-	XMLEncoder encode = null;
-	XMLDecoder decoder = null;
-	Scanner sc = null;
+	final String FILENAME = "contacts.txt";
+	ObjectOutputStream encode = null;
+	ObjectInputStream decoder = null;
 	
 	/*
-	 * Loads an object from the data VERIOSN2
+	 * Loads the data containers in order for ContactManagerImpl
 	 */	
 	public Object[] loadData() {
 		
-		Map<String, Set<Contact>> contactMap;
-		Map<Integer, Contact> idMap;
-		Map<Integer, Meeting> meetingMap;
-		IdGenerator idGenerator;
 		
 		try {
-			decoder = new XMLDecoder(
+			decoder = new ObjectInputStream(
 					new BufferedInputStream(
 							new FileInputStream(FILENAME)));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
 		
-		
+		Map<String, Set<Contact>> contactMap = null;
+		Map<Integer, Contact> idMap = null;
+		Map<Integer, Meeting> meetingMap = null;
+		IdGenerator idGenerator = null;
+
+		try {
 		contactMap = (Map<String, Set<Contact>>) decoder.readObject();
 		idMap = (Map<Integer, Contact>) decoder.readObject();
 		meetingMap = (Map<Integer, Meeting>) decoder.readObject();
 		idGenerator = (IdGenerator) decoder.readObject();
-		
-		decoder.close();	//this line is optional
+		} catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+		try {
+			decoder.close();	//this line is optional
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return new Object[]{contactMap, idMap, meetingMap, idGenerator};
 	}
@@ -61,25 +69,41 @@ public class DataManager {
 	 * Adds an object to the data to be saved
 	 */
 	public void saveData(Object ...obj) {
+
 		try {
-			encode = new XMLEncoder(
+			encode = new ObjectOutputStream(
 					new BufferedOutputStream(
 							new FileOutputStream(FILENAME)));
 		} catch (FileNotFoundException e) {
-			System.err.println("encoding contact manager... " + e);
+			System.err.println("encoding... " + e);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		for (Object o : obj) {
-			encode.writeObject(o);
-		};
+		try {
+			for (Object o : obj) {
+				encode.writeObject(o);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		try {
+			encode.close();
+		} catch (IOException ex2) {
+			ex2.printStackTrace();
+		}
+
 	}
 
 
-	/*
-	 * closes the XMLEncoder	
-	 */
-	public void close() {
-		
-		encode.close();
-		
-	}
+		/*
+		 * closes the ObjectOutputStream encoder	
+		 */
+		public void close() {
+			try {
+			encode.close();
+			} catch (IOException ex2) {
+				ex2.printStackTrace();
+			}
+		}
 }
