@@ -20,6 +20,7 @@ import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.DataManager;
+import ContactManager.DataManagerImpl;
 import ContactManager.IdGenerator;
 
 /**
@@ -40,7 +41,7 @@ public class DataManagerTests {
 	
 		IdGenerator idgen = new MockIdGeneratorImpl();
 		
-		dm = new DataManager();
+		dm = new DataManagerImpl();
 		cm = new ContactManagerImpl(idgen, dm);	
 	}
 

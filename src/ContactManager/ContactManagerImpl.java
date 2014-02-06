@@ -51,7 +51,6 @@ public class ContactManagerImpl implements ContactManager {
 		
 		Runtime.getRuntime().addShutdownHook(saveOnExit());
 		
-		// TODO put in shutdown hook that calls flush
 	}
 	
 	

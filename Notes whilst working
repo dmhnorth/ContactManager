@@ -1,5 +1,17 @@
-the test for saving, I currently just wanted anything at all to be returned, even if the contacts don’t match.
-The project is definitely saving them, its just not reading them out right
+
+
+move things around to different packages that make sense. Possibly using multiple levels of package
+
+check every method is following the spec
+
+write the javadoc
+
+clean any supressed warnings?
+
+Have a play refactoring some of the methods
+
+
+
 
 
 
@@ -7,13 +19,8 @@ The project is definitely saving them, its just not reading them out right
 
 use find bugs.
 
-this has to be passed into the contact manager when it is instantiated, which during my tests, i use the special one.
-THIS IS DEPENDANCY INJECTION. The class i care about is the class I’m testing.
-
 
 clean up all the TODOs
 Refactoring (first check all the the tests are working appropriately!!)
-- check the way dates are compared, using compareto could be a more effective, less messy way of doing this. 
-- create instances of each list or hash set on the fly throughout methods rather than at the top. may end up being cleaner throughout
--  
+
 

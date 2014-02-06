@@ -25,6 +25,7 @@ import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
 import ContactManager.ContactManagerImpl;
 import ContactManager.DataManager;
+import ContactManager.DataManagerImpl;
 import ContactManager.EmptyContactException;
 import ContactManager.FutureMeeting;
 import ContactManager.IdGenerator;
@@ -68,7 +69,7 @@ public class ContactManagerTest {
 		
 		IdGenerator idgen = new MockIdGeneratorImpl();
 		
-		dm = new DataManager();
+		dm = new DataManagerImpl();
 		cm = new ContactManagerImpl(idgen, dm);	
 		date = Calendar.getInstance();
 	}
