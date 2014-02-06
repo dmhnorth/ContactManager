@@ -101,7 +101,7 @@ public class DataManagerTests {
 		Assert.assertNotNull(contactSet);
 		Contact[] contactsLoaded = contactSet.toArray(new Contact[0]);
 		contact2 = contactsLoaded[0];
-		System.out.println(contact2.getName() + contact2.getId());
+//		System.out.println(contact2.getName() + contact2.getId());
 		
 		//check the first contact is the same as the previous one
 		assertEquals(contact1.getName(), contact2.getName());

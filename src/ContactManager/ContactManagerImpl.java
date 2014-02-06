@@ -49,6 +49,8 @@ public class ContactManagerImpl implements ContactManager {
 			idGenerator = idgen;
 		}
 		
+		Runtime.getRuntime().addShutdownHook(saveOnExit());
+		
 		// TODO put in shutdown hook that calls flush
 	}
 	
@@ -328,5 +330,23 @@ public class ContactManagerImpl implements ContactManager {
 	public void flush() {
 				
 		dataManager.saveData(contactMap, idMap, meetingMap, idGenerator);
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Thread saveOnExit(){
+		
+		Thread exit = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				flush();
+				
+			}
+		});
+		return exit;
 	}
 }

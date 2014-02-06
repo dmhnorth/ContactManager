@@ -5,6 +5,7 @@ package ContactManagerTests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import sun.security.jca.GetInstance;
 import ContactManager.Contact;
 import ContactManager.ContactImpl;
 import ContactManager.ContactManager;
@@ -45,11 +47,24 @@ public class ContactManagerTest {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 	
+	
+	/**
+	 * deletes Test data between tests
+	 */
+	private void deleteTestData() {
+		if (new File("contacts.txt").exists()) {
+			new File("contacts.txt").delete();
+		}
+	}
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
+		deleteTestData();
+			
 		
 		IdGenerator idgen = new MockIdGeneratorImpl();
 		
@@ -63,6 +78,9 @@ public class ContactManagerTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		
+		deleteTestData();
+		
 		
 		cm = null;
 		date = null;
@@ -242,12 +260,15 @@ public class ContactManagerTest {
 	@Test
 	public void testGetMeeting() throws EmptyContactException {
 		
+		Calendar dateCalendar = new GregorianCalendar();
+		
+		
 		cm.addNewContact("Jim", "notes");
 		cm.addNewContact("Jim", "Some notes");
 		
 		Set<Contact> contacts = cm.getContacts("Jim");
 		
-		int id = cm.addFutureMeeting(contacts, date);
+		int id = cm.addFutureMeeting(contacts, dateCalendar);
 		Meeting meeting = cm.getMeeting(id);
 		
 		assertEquals(id, meeting.getId());
