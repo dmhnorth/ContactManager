@@ -11,9 +11,12 @@ use find bugs.
 
 
 
-IDGEN
+IDGEN - mention this in the javadoc
 current idGenerator goes into the production code along with the interface, including the static part
 create my custom idGenerator for use in my testing package.
+
+DataManager - Mention this in the javadoc
+
 
 this has to be passed into the contact manager when it is instantiated, which during my tests, i use the special one.
 THIS IS DEPENDANCY INJECTION. The class i care about is the class I’m testing.

@@ -56,122 +56,51 @@ public class DataManagerTests {
 	}
 	
 	
-	/*
-	 * Tests saving and loading an array several times
-	 */
-	@Test
-	public void flushPersistanceTestSingleLoadArray() {
-		
-		List<Integer> al = new ArrayList<Integer>();
-		al.add(1);
-		al.add(2);
-		al.add(3);
-		
-		dm.saveData(al);
-			
-		dm.close();
-		
-		List<Integer> aSecondList = (List<Integer>) dm.loadData(al);
-		
-		assertTrue(aSecondList.get(0) == 1);
-		assertTrue(aSecondList.get(2) == 3);
-		
-		aSecondList.add(4);
-		dm.saveData(aSecondList);
-		dm.close();
-		
-		List<Integer> aThirdList = (List<Integer>) dm.loadData(aSecondList);
-		assertTrue(aThirdList.get(3) == 4);		
-		
-	}
-	
-	/*
-	 * Tests saving and loading a contact list
-	 */
-	@Test
-	public void flushPersistanceTestSingleLoadContact() {
-		
-		Set<Contact> contacts = new HashSet<Contact>();
-		Contact person1 = new ContactImpl("Person1", 1);
-		Contact person2 = new ContactImpl("Person2", 2);
-		contacts.add(person1);
-		contacts.add(person2);
-		
-		dm.saveData(contacts);
-		dm.close();
-				
-		HashSet<Contact> contactsReload = (HashSet<Contact>) dm.loadData(contacts);
-		
-		Contact[] contactArray = contacts.toArray(new Contact[0]);
-		Contact contact1 = contactArray[0];
-		
-		Contact[] contactArrayLoad = contactsReload.toArray(new Contact[0]);
-		Contact contact2 = contactArray[0];
-		
-		
-		assertEquals(contact1, contact2);		
-		
-	}
-	
-	/*
-	 * Tests saving and loading two entirely different objects
-	 */
-	@Test
-	public void flushPersistanceTestDoubleLoad() {
-		
-		List<Integer> al = new ArrayList<Integer>();
-		al.add(1);
-		al.add(2);
-		al.add(3);
-		
-		Set<Contact> contacts = new HashSet<Contact>();
-		Contact person1 = new ContactImpl("Person1", 1);
-		Contact person2 = new ContactImpl("Person2", 2);
-		contacts.add(person1);
-		contacts.add(person2);
-		
-		dm.saveData(al, contacts);
-		dm.close();
-		
-		
-		HashSet<Contact> contactsReload = (HashSet<Contact>) dm.loadData(contacts);
-		List<Integer> arrayReload = (List<Integer>) dm.loadData(al);
-		
-		Contact[] contactArray = contacts.toArray(new Contact[0]);
-		Contact contact1 = contactArray[0];
-		
-		Contact[] contactArrayLoad = contactsReload.toArray(new Contact[0]);
-		Contact contact2 = contactArray[0];
-		
-		
-		assertEquals(contact1, contact2);
-		assertTrue(arrayReload.get(0) == 1);
-		assertTrue(arrayReload.get(2) == 3);
-		
-		
-	}
+
 
 	/*
 	 * Tests the using the contact manager
-	 *
+	 */
 	@Test
 	public void flushPersistanceTestSave() {
 		
+		Contact contact1 = new ContactImpl();
+		Contact contact2 = new ContactImpl();
+		
+		//set up a date
 		Calendar future = new GregorianCalendar();
 		future.add(Calendar.DATE, +10);
-				
+		
+		//set up some contacts and create a set of them
 		cm.addNewContact("Potato James", "Some notes about Ian.");
 		cm.addNewContact("Paul Willy", "Some notes about Paul");
 		Set<Contact> contacts = cm.getContacts(0, 1);
 		
+		//create some meetings
 		cm.addFutureMeeting(contacts, future);
 		cm.addNewPastMeeting(contacts, future, "text");
 		
+		//first contact put in array
+		Contact[] contactArray = contacts.toArray(new Contact[0]);
+		contact1 = contactArray[0];
 		
+		//save everything
 		cm.flush();
 		
+		//close the cm
+		cm = null;
 		
-	}
-	 */
-
+		//set up and open a new cm
+		IdGenerator idgen = new MockIdGeneratorImpl();
+		cm = new ContactManagerImpl(idgen, dm);
+		
+		//load the first contact from this new cm into contact2
+		Contact[] contactsLoaded = cm.getContacts("Potato James").toArray(new Contact[0]);
+		contact2 = contactsLoaded[0];
+		
+		//check the first contact is the same as the previous one
+		assertEquals(contact1.getName(), contact2.getName());
+		assertEquals(contact1.getId(), contact2.getId());
+				
+	}	
 }

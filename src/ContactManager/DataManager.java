@@ -7,10 +7,12 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Map;
 import java.util.Scanner;
 /**
  * 
  */
+import java.util.Set;
 
 /**
  * @author Dave
@@ -18,33 +20,16 @@ import java.util.Scanner;
  */
 public class DataManager {
 	
-	final String FILENAME = "save_data.xml";
+	final String FILENAME = "contacts.xml";
 	XMLEncoder encode = null;
 	XMLDecoder decoder = null;
 	Scanner sc = null;
 	
 	/*
 	 * Loads an object from the data
-	 */	
+	 *	
 	public Object loadData(Object obj) {
-		
-		/*
-		 * purely to print out things
-		try {
-			sc = new Scanner(
-					new BufferedInputStream(
-							new FileInputStream(FILENAME)));
-		} catch (FileNotFoundException e) {
-			System.err.println("reading... " + e);
-		}
-		
-		while (sc.hasNext())
-				System.out.println(sc.next());
-		
-		sc.close();
-		*/
-		
-		
+						
 		try {
 			decoder = new XMLDecoder(
 					new BufferedInputStream(
@@ -55,9 +40,42 @@ public class DataManager {
 		
 		Object result = (Object) decoder.readObject();
 		
-//		decoder.close();
+		
+		decoder.close();	//this line is optional
 		return result;
 	}
+	*/
+	
+	/*
+	 * Loads an object from the data VERIOSN2
+	 */	
+	public Object[] loadData() {
+		
+		Map<String, Set<Contact>> contactMap;
+		Map<Integer, Contact> idMap;
+		Map<Integer, Contact> meetingMap;
+		IdGenerator idGenerator;
+		
+		try {
+			decoder = new XMLDecoder(
+					new BufferedInputStream(
+							new FileInputStream(FILENAME)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		contactMap = (Map<String, Set<Contact>>) decoder.readObject();
+		idMap = (Map<Integer, Contact>) decoder.readObject();
+		meetingMap = (Map<Integer, Contact>) decoder.readObject();
+		idGenerator = (IdGenerator) decoder.readObject();
+		
+		decoder.close();	//this line is optional
+		
+		return new Object[]{contactMap, idMap, meetingMap, idGenerator};
+	}
+	
+	
 	
 	
 	/*
@@ -81,6 +99,7 @@ public class DataManager {
 	 * closes the XMLEncoder	
 	 */
 	public void close() {
+		
 		encode.close();
 		
 	}
