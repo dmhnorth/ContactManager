@@ -26,34 +26,13 @@ public class DataManager {
 	Scanner sc = null;
 	
 	/*
-	 * Loads an object from the data
-	 *	
-	public Object loadData(Object obj) {
-						
-		try {
-			decoder = new XMLDecoder(
-					new BufferedInputStream(
-							new FileInputStream(FILENAME)));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		Object result = (Object) decoder.readObject();
-		
-		
-		decoder.close();	//this line is optional
-		return result;
-	}
-	*/
-	
-	/*
 	 * Loads an object from the data VERIOSN2
 	 */	
 	public Object[] loadData() {
 		
 		Map<String, Set<Contact>> contactMap;
 		Map<Integer, Contact> idMap;
-		Map<Integer, Contact> meetingMap;
+		Map<Integer, Meeting> meetingMap;
 		IdGenerator idGenerator;
 		
 		try {
@@ -67,7 +46,7 @@ public class DataManager {
 		
 		contactMap = (Map<String, Set<Contact>>) decoder.readObject();
 		idMap = (Map<Integer, Contact>) decoder.readObject();
-		meetingMap = (Map<Integer, Contact>) decoder.readObject();
+		meetingMap = (Map<Integer, Meeting>) decoder.readObject();
 		idGenerator = (IdGenerator) decoder.readObject();
 		
 		decoder.close();	//this line is optional

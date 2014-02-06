@@ -3,6 +3,7 @@
  */
 package ContactManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -27,16 +28,23 @@ public class ContactManagerImpl implements ContactManager {
 	private IdGenerator idGenerator;
 	private DataManager dataManager;
 	
-	
-	
-	
 	public ContactManagerImpl(IdGenerator idgen, DataManager dm) {
-		//read from file if it exist, if it doesn't create a new one
-		contactMap = new HashMap<String, Set<Contact>>();
-		idMap = new HashMap<Integer, Contact>();
-		meetingMap = new HashMap<Integer, Meeting>();
-		idGenerator = idgen;
+
 		dataManager = dm;
+		
+		if (new File("contacts.xml").exists()){
+			Object[] setUp = dm.loadData();
+			this.contactMap = (Map<String, Set<Contact>>) setUp[0];
+			this.idMap = (Map<Integer, Contact>) setUp[1];
+			this.meetingMap = (Map<Integer, Meeting>) setUp[2];
+			this.idGenerator = (IdGenerator) setUp[3];
+			
+		} else {
+			contactMap = new HashMap<String, Set<Contact>>();
+			idMap = new HashMap<Integer, Contact>();
+			meetingMap = new HashMap<Integer, Meeting>();
+			idGenerator = idgen;
+		}
 		
 		// TODO put in shutdown hook that calls flush
 	}

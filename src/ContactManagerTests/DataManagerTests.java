@@ -5,6 +5,7 @@ package ContactManagerTests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -51,12 +52,13 @@ public class DataManagerTests {
 	@After
 	public void tearDown() throws Exception {
 		
+		if (new File("contacts.xml").exists()) {
+			new File("contacts.xml").deleteOnExit();
+		}
+		
 		cm = null;
 		dm = null;
 	}
-	
-	
-
 
 	/*
 	 * Tests the using the contact manager
@@ -95,7 +97,7 @@ public class DataManagerTests {
 		cm = new ContactManagerImpl(idgen, dm);
 		
 		//load the first contact from this new cm into contact2
-		Contact[] contactsLoaded = cm.getContacts("Potato James").toArray(new Contact[0]);
+		Contact[] contactsLoaded = cm.getContacts("Paul Willy").toArray(new Contact[0]);
 		contact2 = contactsLoaded[0];
 		
 		//check the first contact is the same as the previous one
