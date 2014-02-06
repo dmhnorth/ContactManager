@@ -74,7 +74,7 @@ public class DataManagerTests {
 		//set up some contacts and create a set of them
 		cm.addNewContact(name, "notes about Ian.");
 		cm.addNewContact("Paul", "notes about Paul");
-		Set<Contact> contacts = cm.getContacts(0, 1);
+		Set<Contact> contacts = cm.getContacts(0);
 		
 		//create some meetings
 		cm.addFutureMeeting(contacts, future);

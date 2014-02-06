@@ -35,7 +35,7 @@ public class ContactManagerImpl implements ContactManager {
 
 		dataManager = dm;
 		
-		if (new File("contacts.xml").exists()){
+		if (dm.dataFileExists()){
 			Object[] setUp = dm.loadData();
 			contactMap = (Map<String, Set<Contact>>) setUp[0];
 			idMap = (Map<Integer, Contact>) setUp[1];
