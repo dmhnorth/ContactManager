@@ -1,22 +1,11 @@
-get PastMeetingList actually returns all the meetings at the moment
-this is the same for future, so use the future meeting list to sort this out
-
-meetSort could clean up a list and remove duplicates
+the test for saving, I currently just wanted anything at all to be returned, even if the contacts don’t match.
+The project is definitely saving them, its just not reading them out right
 
 
 
 
-use find bugs. 
 
-
-
-
-IDGEN - mention this in the javadoc
-current idGenerator goes into the production code along with the interface, including the static part
-create my custom idGenerator for use in my testing package.
-
-DataManager - Mention this in the javadoc
-
+use find bugs.
 
 this has to be passed into the contact manager when it is instantiated, which during my tests, i use the special one.
 THIS IS DEPENDANCY INJECTION. The class i care about is the class I’m testing.

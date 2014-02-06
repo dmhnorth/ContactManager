@@ -28,16 +28,19 @@ public class ContactManagerImpl implements ContactManager {
 	private IdGenerator idGenerator;
 	private DataManager dataManager;
 	
+	/*
+	 * The constructor requires an object of IdGenerator and DataManager as parameters
+	 */
 	public ContactManagerImpl(IdGenerator idgen, DataManager dm) {
 
 		dataManager = dm;
 		
 		if (new File("contacts.xml").exists()){
 			Object[] setUp = dm.loadData();
-			this.contactMap = (Map<String, Set<Contact>>) setUp[0];
-			this.idMap = (Map<Integer, Contact>) setUp[1];
-			this.meetingMap = (Map<Integer, Meeting>) setUp[2];
-			this.idGenerator = (IdGenerator) setUp[3];
+			contactMap = (Map<String, Set<Contact>>) setUp[0];
+			idMap = (Map<Integer, Contact>) setUp[1];
+			meetingMap = (Map<Integer, Meeting>) setUp[2];
+			idGenerator = (IdGenerator) setUp[3];
 			
 		} else {
 			contactMap = new HashMap<String, Set<Contact>>();
@@ -325,6 +328,5 @@ public class ContactManagerImpl implements ContactManager {
 	public void flush() {
 				
 		dataManager.saveData(contactMap, idMap, meetingMap, idGenerator);
-		dataManager.close();				
 	}
 }

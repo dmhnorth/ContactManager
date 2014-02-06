@@ -21,44 +21,29 @@ import java.util.Set;
 public class DataManager {
 	
 	final String FILENAME = "contacts.txt";
-	ObjectOutputStream encode = null;
-	ObjectInputStream decoder = null;
 	
-	/*
-	 * Loads the data containers in order for ContactManagerImpl
-	 */	
+	
+	
+		
 	public Object[] loadData() {
-		
-		
-		try {
-			decoder = new ObjectInputStream(
-					new BufferedInputStream(
-							new FileInputStream(FILENAME)));
-		} catch (IOException e) {
-            e.printStackTrace();
-        }
-		
 		Map<String, Set<Contact>> contactMap = null;
 		Map<Integer, Contact> idMap = null;
 		Map<Integer, Meeting> meetingMap = null;
 		IdGenerator idGenerator = null;
-
+		ObjectInputStream decode = null;	
 		try {
-		contactMap = (Map<String, Set<Contact>>) decoder.readObject();
-		idMap = (Map<Integer, Contact>) decoder.readObject();
-		meetingMap = (Map<Integer, Meeting>) decoder.readObject();
-		idGenerator = (IdGenerator) decoder.readObject();
+			decode = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+			contactMap = (Map<String, Set<Contact>>) decode.readObject();
+			idMap = (Map<Integer, Contact>) decode.readObject();
+			meetingMap = (Map<Integer, Meeting>) decode.readObject();
+			idGenerator = (IdGenerator) decode.readObject();
+			decode.close();	
 		} catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-		try {
-			decoder.close();	//this line is optional
-		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return new Object[]{contactMap, idMap, meetingMap, idGenerator};
 	}
 	
@@ -68,42 +53,18 @@ public class DataManager {
 	/*
 	 * Adds an object to the data to be saved
 	 */
-	public void saveData(Object ...obj) {
-
+	public void saveData(Map<String, Set<Contact>> contactMap, Map<Integer, Contact> idMap, Map<Integer, Meeting> meetingMap, IdGenerator idGenerator) {
+		ObjectOutputStream encode = null;
 		try {
-			encode = new ObjectOutputStream(
-					new BufferedOutputStream(
-							new FileOutputStream(FILENAME)));
-		} catch (FileNotFoundException e) {
-			System.err.println("encoding... " + e);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			for (Object o : obj) {
-				encode.writeObject(o);
-			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-
-		try {
+			encode = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILENAME)));		
+			encode.writeObject(contactMap);
+			encode.writeObject(idMap);
+			encode.writeObject(meetingMap);
+			encode.writeObject(idGenerator);
 			encode.close();
 		} catch (IOException ex2) {
 			ex2.printStackTrace();
 		}
 
 	}
-
-
-		/*
-		 * closes the ObjectOutputStream encoder	
-		 */
-		public void close() {
-			try {
-			encode.close();
-			} catch (IOException ex2) {
-				ex2.printStackTrace();
-			}
-		}
 }
