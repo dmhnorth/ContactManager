@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ContactManager;
+package Impl;
 
 /**
  * @author Dave

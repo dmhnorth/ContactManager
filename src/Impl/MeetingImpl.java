@@ -1,11 +1,14 @@
 /**
  * 
  */
-package ContactManager;
+package Impl;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
+
+import Interfaces.Contact;
+import Interfaces.Meeting;
 
 /**
  * @author Dave

@@ -1,4 +1,4 @@
-package ContactManager;
+package Interfaces;
 
 import java.util.Calendar;
 import java.util.List;

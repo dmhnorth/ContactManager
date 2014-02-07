@@ -12,11 +12,11 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import ContactManager.Contact;
-import ContactManager.ContactImpl;
-import ContactManager.EmptyContactException;
-import ContactManager.PastMeeting;
-import ContactManager.PastMeetingImpl;
+import Impl.ContactImpl;
+import Impl.EmptyContactException;
+import Impl.PastMeetingImpl;
+import Interfaces.Contact;
+import Interfaces.PastMeeting;
 
 /**
  * @author Dave

@@ -1,6 +1,8 @@
-package ContactManager;
+package Impl;
 
 import java.io.Serializable;
+
+import Interfaces.Contact;
 
 public class ContactImpl implements Contact, Serializable {
 

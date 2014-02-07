@@ -2,7 +2,7 @@ package ContactManagerTests;
 
 import java.io.Serializable;
 
-import ContactManager.IdGenerator;
+import Interfaces.IdGenerator;
 
 public class MockIdGeneratorImpl implements IdGenerator, Serializable {
 
@@ -10,14 +10,11 @@ public class MockIdGeneratorImpl implements IdGenerator, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1942164862752447264L;
-	private int counter = -1;	
+	private int counter = 0;	
 	
 	@Override
 	public int getNewId() {
-		
-		counter++;
-		
-		return counter;
+		return counter++;
 	}
 
 }

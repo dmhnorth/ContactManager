@@ -1,4 +1,4 @@
-package ContactManager;
+package Interfaces;
 
 /**
  * A meeting to be held in the future

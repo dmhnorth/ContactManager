@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ContactManager;
+package Impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import Interfaces.Contact;
+import Interfaces.ContactManager;
+import Interfaces.DataManager;
+import Interfaces.FutureMeeting;
+import Interfaces.IdGenerator;
+import Interfaces.Meeting;
+import Interfaces.PastMeeting;
 
 
 /**

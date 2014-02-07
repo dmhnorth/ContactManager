@@ -1,4 +1,4 @@
-package ContactManager;
+package Impl;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -13,6 +13,11 @@ import java.util.Map;
  * 
  */
 import java.util.Set;
+
+import Interfaces.Contact;
+import Interfaces.DataManager;
+import Interfaces.IdGenerator;
+import Interfaces.Meeting;
 
 /**
  * @author Dave

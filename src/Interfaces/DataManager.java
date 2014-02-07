@@ -1,4 +1,4 @@
-package ContactManager;
+package Interfaces;
 
 import java.util.Map;
 import java.util.Set;

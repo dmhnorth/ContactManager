@@ -1,10 +1,13 @@
 /**
  * 
  */
-package ContactManager;
+package Impl;
 
 import java.util.Calendar;
 import java.util.Set;
+
+import Interfaces.Contact;
+import Interfaces.PastMeeting;
 
 /**
  * @author Dave

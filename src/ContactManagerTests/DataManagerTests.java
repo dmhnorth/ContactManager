@@ -15,13 +15,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ContactManager.Contact;
-import ContactManager.ContactImpl;
-import ContactManager.ContactManager;
-import ContactManager.ContactManagerImpl;
-import ContactManager.DataManager;
-import ContactManager.DataManagerImpl;
-import ContactManager.IdGenerator;
+import Impl.ContactImpl;
+import Impl.ContactManagerImpl;
+import Impl.DataManagerImpl;
+import Interfaces.Contact;
+import Interfaces.ContactManager;
+import Interfaces.DataManager;
+import Interfaces.IdGenerator;
 
 /**
  * @author Dave
@@ -84,7 +84,7 @@ public class DataManagerTests {
 		//first contact put in array
 		Contact[] contactArray = contacts.toArray(new Contact[0]);
 		contact1 = contactArray[0];
-		System.out.println(contact1.getName() + contact1.getId());
+//		System.out.println(contact1.getName() + contact1.getId());
 		
 		//save everything
 		cm.flush();

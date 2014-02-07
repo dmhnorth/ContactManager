@@ -1,4 +1,4 @@
-package ContactManager;
+package Interfaces;
 
 /**
  * A contact is a person we are making business with or may do in the future.

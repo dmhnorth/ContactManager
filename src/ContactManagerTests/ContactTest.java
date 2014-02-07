@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ContactManager.ContactImpl;
+import Impl.ContactImpl;
 
 /**
  * @author Dave
@@ -26,7 +26,7 @@ public class ContactTest {
 	
 	
 	/**
-	 * Test method for {@link ContactManager.ContactImpl#getId()}.
+	 * Test method for {@link Impl.ContactImpl#getId()}.
 	 */
 	@Test
 	public void testGetId() {
@@ -34,7 +34,7 @@ public class ContactTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.ContactImpl#getName()}.
+	 * Test method for {@link Impl.ContactImpl#getName()}.
 	 */
 	@Test
 	public void testGetName() {		
@@ -42,7 +42,7 @@ public class ContactTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.ContactImpl#getNotes()}.
+	 * Test method for {@link Impl.ContactImpl#getNotes()}.
 	 */
 	@Test
 	public void testGetEmptyNotes() {
@@ -50,7 +50,7 @@ public class ContactTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.ContactImpl#addNotes(java.lang.String)}.
+	 * Test method for {@link Impl.ContactImpl#addNotes(java.lang.String)}.
 	 */
 	@Test
 	public void testAddNotes() {

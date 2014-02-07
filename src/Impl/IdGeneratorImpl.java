@@ -1,30 +1,20 @@
 /**
  * 
  */
-package ContactManager;
+package Impl;
 
 import java.io.Serializable;
 
-/**
- * @author Dave
- *
- */
+import Interfaces.IdGenerator;
+
 public class IdGeneratorImpl implements IdGenerator, Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1257209297568770939L;
-	private static int counter = -1;
+	private static int counter = 0;
 
-	
-	/* (non-Javadoc)
-	 * @see ContactManager.IdGenerator#getNewId()
-	 */
 	@Override
 	public int getNewId(){
-		counter++;
-		return counter;
+		return counter++;
 	}
 	
 }

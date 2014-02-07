@@ -20,18 +20,18 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import sun.security.jca.GetInstance;
-import ContactManager.Contact;
-import ContactManager.ContactImpl;
-import ContactManager.ContactManager;
-import ContactManager.ContactManagerImpl;
-import ContactManager.DataManager;
-import ContactManager.DataManagerImpl;
-import ContactManager.EmptyContactException;
-import ContactManager.FutureMeeting;
-import ContactManager.IdGenerator;
-import ContactManager.Meeting;
-import ContactManager.PastMeeting;
-import ContactManager.PastMeetingImpl;
+import Impl.ContactImpl;
+import Impl.ContactManagerImpl;
+import Impl.DataManagerImpl;
+import Impl.EmptyContactException;
+import Impl.PastMeetingImpl;
+import Interfaces.Contact;
+import Interfaces.ContactManager;
+import Interfaces.DataManager;
+import Interfaces.FutureMeeting;
+import Interfaces.IdGenerator;
+import Interfaces.Meeting;
+import Interfaces.PastMeeting;
 
 /**
  * @author Dave

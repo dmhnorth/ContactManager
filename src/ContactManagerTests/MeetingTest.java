@@ -14,11 +14,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import ContactManager.Contact;
-import ContactManager.ContactImpl;
-import ContactManager.EmptyContactException;
-import ContactManager.MeetingImpl;
-import ContactManager.Meeting;
+import Impl.ContactImpl;
+import Impl.EmptyContactException;
+import Impl.MeetingImpl;
+import Interfaces.Contact;
+import Interfaces.Meeting;
 
 /**
  * @author Dave
@@ -49,7 +49,7 @@ public class MeetingTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.MeetingImpl#getId()}.
+	 * Test method for {@link Impl.MeetingImpl#getId()}.
 	 */
 	@Test
 	public void testGetId() {
@@ -57,7 +57,7 @@ public class MeetingTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.MeetingImpl#getDate()}.
+	 * Test method for {@link Impl.MeetingImpl#getDate()}.
 	 */
 	@Test
 	public void testGetDate() {
@@ -65,7 +65,7 @@ public class MeetingTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
+	 * Test method for {@link Impl.MeetingImpl#getContacts()}.
 	 */
 	@Test
 	public void testGetContacts() {
@@ -73,7 +73,7 @@ public class MeetingTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
+	 * Test method for {@link Impl.MeetingImpl#getContacts()}.
 	 */
 	@Test
 	public void testGetNullContacts() throws EmptyContactException {
@@ -82,7 +82,7 @@ public class MeetingTest {
 	}
 
 	/**
-	 * Test method for {@link ContactManager.MeetingImpl#getContacts()}.
+	 * Test method for {@link Impl.MeetingImpl#getContacts()}.
 	 */
 	@Test
 	public void testGetNoContacts() throws EmptyContactException {
