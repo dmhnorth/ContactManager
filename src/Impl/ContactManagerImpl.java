@@ -3,7 +3,6 @@
  */
 package Impl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -36,9 +35,14 @@ public class ContactManagerImpl implements ContactManager {
 	private IdGenerator idGenerator;
 	private DataManager dataManager;
 	
-	/*
-	 * The constructor requires an object of IdGenerator and DataManager as parameters
+	/**
+	 * The constructor requires an object of IdGenerator and DataManager in order to be created.
+	 * 
+	 * @param IdGenerator
+	 * 
+	 * @param DataManager
 	 */
+	@SuppressWarnings("unchecked")
 	public ContactManagerImpl(IdGenerator idgen, DataManager dm) {
 
 		dataManager = dm;
@@ -56,11 +60,8 @@ public class ContactManagerImpl implements ContactManager {
 			meetingMap = new HashMap<Integer, Meeting>();
 			idGenerator = idgen;
 		}
-		
 		Runtime.getRuntime().addShutdownHook(saveOnExit());
-		
 	}
-	
 	
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) throws IllegalArgumentException {
@@ -68,13 +69,12 @@ public class ContactManagerImpl implements ContactManager {
 		Calendar now = Calendar.getInstance();
 
 		if (date.before(now)) { 
-			throw new IllegalStateException();
+			throw new IllegalArgumentException();
 		}
 
 		FutureMeeting meeting = null;
 		try {
 			meeting =  new FutureMeetingImpl(contacts, date, idGenerator.getNewId());
-			//Add meeting to the data structure
 			meetingMap.put(meeting.getId(), meeting);	
 			return meeting.getId();
 		} catch (EmptyContactException e) {
@@ -143,8 +143,14 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
-	/*
+	/**
 	 * Used for checking whether two meetings happen on the same day but disregards the time of day
+	 * 
+	 * @param date1 of day one to be compared
+	 * 
+	 * @param date2 of day two to be compared
+	 * 
+	 * @return boolean true if both dates are on the same day
 	 */
 	private boolean sameDay(Calendar date1, Calendar date2) {
 				
@@ -169,8 +175,12 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
-	/*
+	/**
 	 * Comparator for organizing a Collection of meetings into Chronological order
+	 * 
+	 * @param Meeting first meeting
+	 * 
+	 * @param Meeting second meeting
 	 */
 	private class MeetSort implements Comparator<Meeting> {
 
@@ -227,7 +237,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException();
 		}
 
-		if (!contactExists(contacts)) {
+		if (!contactExists(contacts) || contacts.size() < 1) {
 			throw new IllegalArgumentException();
 		}
 
@@ -240,8 +250,12 @@ public class ContactManagerImpl implements ContactManager {
 		}		
 	}
 
-	/*
-	 * This Method establishs if a contact exists within the contacts container
+	/**
+	 * This Method checks if a contact exists within the contacts container
+	 * 
+	 * @param contacts
+	 * 
+	 * @return boolean true if the contact exists within the contacts data structure
 	 */
 	private boolean contactExists(Set<Contact> contacts) {
 		boolean contactsExist = false;
@@ -278,7 +292,6 @@ public class ContactManagerImpl implements ContactManager {
 		} catch (EmptyContactException e) {			
 			e.printStackTrace();
 		}
-
 		meetingMap.put(id, pm);
 	}
 
@@ -304,9 +317,6 @@ public class ContactManagerImpl implements ContactManager {
 		}
 	}
 
-	/*
-	 * 
-	 */
 	@Override
 	public Set<Contact> getContacts(int... ids) throws IllegalArgumentException {
 
@@ -317,13 +327,9 @@ public class ContactManagerImpl implements ContactManager {
 			}
 			contacts.add(idMap.get(id));
 		}
-
 		return contacts;
 	}
 	
-	/*
-	 * Using a contactMap we have now converted the values into Sets so it works as a matrix
-	 */
 	@Override
 	public Set<Contact> getContacts(String name) throws NullPointerException {
 
@@ -335,14 +341,14 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void flush() {
-				
 		dataManager.saveData(contactMap, idMap, meetingMap, idGenerator);
 	}
 	
 	
 	/**
+	 * Saves the state of the contact containers, the idgenerator and the meeting lists on exit
 	 * 
-	 * @return
+	 * @return a thread for the shutdown process to carry out
 	 */
 	private Thread saveOnExit(){
 		
@@ -351,7 +357,6 @@ public class ContactManagerImpl implements ContactManager {
 			@Override
 			public void run() {
 				flush();
-				
 			}
 		});
 		return exit;

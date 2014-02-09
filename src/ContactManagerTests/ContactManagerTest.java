@@ -19,7 +19,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import sun.security.jca.GetInstance;
 import Impl.ContactImpl;
 import Impl.ContactManagerImpl;
 import Impl.DataManagerImpl;
@@ -312,7 +311,7 @@ public class ContactManagerTest {
 		
 	@Test
 	public void addMeetingNotesIllegalStateException(){
-		thrown.expect(IllegalStateException.class);
+		thrown.expect(IllegalArgumentException.class);
 		
 		Calendar date = new GregorianCalendar();
 		date.add(Calendar.DATE, -1);
@@ -461,4 +460,8 @@ public class ContactManagerTest {
 		assertTrue(cm.getFutureMeetingList(future).size() == 2);
 	}
 	
+	@Test
+	public void getMeetingisnullifempty() {
+		assertTrue(cm.getMeeting(0) == null);
+	}
 }

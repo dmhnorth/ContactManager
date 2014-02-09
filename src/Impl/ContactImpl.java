@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 import Interfaces.Contact;
 
+
+/**
+ * 
+ * @author Dave
+ *
+ */
 public class ContactImpl implements Contact, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -225015209537721411L;
 	private int id;
 	private String name;
 	private String notes = "";
 	
-	/*
-	 * basic constructor
-	 */
 	public ContactImpl(String name, int iD){
 		this.name = name;
 		this.id = iD;

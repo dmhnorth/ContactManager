@@ -20,6 +20,10 @@ import Interfaces.IdGenerator;
 import Interfaces.Meeting;
 
 /**
+ * This implementation of DataManager is dependent on the objects within the ContactManager
+ * being serializable.
+ * 
+ * 
  * @author Dave
  *
  */
@@ -27,17 +31,12 @@ public class DataManagerImpl implements DataManager {
 	
 	final String FILENAME = "contacts.txt";
 	
-	/* (non-Javadoc)
-	 * @see ContactManager.DataManager#dataFileExists()
-	 */
 	@Override
 	public boolean dataFileExists() {		
 		return new File(FILENAME).exists();
 	} 
 	
-	/* (non-Javadoc)
-	 * @see ContactManager.DataManager#loadData()
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object[] loadData() {
 		Map<String, Set<Contact>> contactMap = null;
@@ -60,15 +59,6 @@ public class DataManagerImpl implements DataManager {
 		return new Object[]{contactMap, idMap, meetingMap, idGenerator};
 	}
 	
-	
-	
-	
-	/*
-	 * Adds an object to the data to be saved
-	 */
-	/* (non-Javadoc)
-	 * @see ContactManager.DataManager#saveData(java.util.Map, java.util.Map, java.util.Map, ContactManager.IdGenerator)
-	 */
 	@Override
 	public void saveData(Map<String, Set<Contact>> contactMap, Map<Integer, Contact> idMap, Map<Integer, Meeting> meetingMap, IdGenerator idGenerator) {
 		ObjectOutputStream encode = null;
@@ -82,6 +72,5 @@ public class DataManagerImpl implements DataManager {
 		} catch (IOException ex2) {
 			ex2.printStackTrace();
 		}
-
 	}
 }

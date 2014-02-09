@@ -28,7 +28,15 @@ public interface DataManager {
 
 	/**
 	 * takes the contactMap, idMap, meetingMap and IdGenerator from a given
-	 * ContactManager and saves it out to a .txt file
+	 * ContactManager and saves it out to a file.
+	 * 
+	 * @param Map<String, Set<Contact>>
+	 * 
+	 * @param Map<Integer, Contact>
+	 * 
+	 * @param Map<Integer, Meeting>
+	 * 
+	 * @param IdGenerator
 	 */
 	public abstract void saveData(Map<String, Set<Contact>> contactMap,
 			Map<Integer, Contact> idMap, Map<Integer, Meeting> meetingMap,

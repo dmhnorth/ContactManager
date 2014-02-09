@@ -15,9 +15,6 @@ import Interfaces.PastMeeting;
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7254946864044167120L;
 	private String notes = "";
 	
@@ -28,10 +25,8 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 		}
 	}
 	
-	
 	@Override
 	public String getNotes() {
 		return notes;
 	}
-
 }

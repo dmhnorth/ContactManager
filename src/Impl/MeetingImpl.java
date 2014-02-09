@@ -16,23 +16,16 @@ import Interfaces.Meeting;
  */
 public class MeetingImpl implements Meeting, Serializable {
 	
-	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1922728117007903192L;
 	private int id;
 	private Calendar date;
 	Set<Contact> contacts;
-	
 	
 	/*
 	 * meeting constructor used to create all meetings from scratch, Past and Future
 	 */
 	public MeetingImpl(Set<Contact> contacts, Calendar date, int iD) throws EmptyContactException {
 		
-		//
 		if(contacts == null || contacts.isEmpty()) {
 			throw new EmptyContactException();
 		}
@@ -41,7 +34,6 @@ public class MeetingImpl implements Meeting, Serializable {
 		this.contacts = contacts;
 		this.id = iD;
 	}
-	
 	
 	@Override
 	public int getId() {
@@ -57,5 +49,4 @@ public class MeetingImpl implements Meeting, Serializable {
 	public Set<Contact> getContacts() {
 		return contacts;
 	}
-
 }
