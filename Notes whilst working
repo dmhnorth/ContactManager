@@ -1,7 +1,5 @@
 
 
-move things around to different packages that make sense. Possibly using multiple levels of package
-
 check every method is following the spec
 
 write the javadoc
