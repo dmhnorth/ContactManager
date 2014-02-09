@@ -10,7 +10,7 @@ package Impl;
 public class EmptyContactException extends Exception {
 	
 	/**
-	 * 
+	 * Exception that is thrown if a set of contacts is empty.
 	 */
 	private static final long serialVersionUID = 1L;
 
